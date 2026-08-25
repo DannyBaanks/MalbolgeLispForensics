@@ -2,7 +2,8 @@
 
 ## Specimen
 
-MalbolgeLISP v1.2 (upstream CC0). Distributed as `lisp.zip` containing
+MalbolgeLISP v1.2 (upstream project; consult upstream for complete licensing).
+Distributed as `lisp.zip` containing
 `core.mb` (371,312,023 bytes) and `init_module.mb` (19,392 bytes).
 Identity: `lisp.mb == concat(init_module.mb, core.mb)`,
 size 371,331,415 bytes (verified by byte-concatenation and by execution).

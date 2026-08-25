@@ -4,14 +4,21 @@ All commands are relative to this repository root. Python is invoked as
 `py` (3.12). Zig 0.16.0 was used for the VM. Windows assumed for the native
 paths; classic-side tools also run elsewhere.
 
+Before reproducing anything, verify the published artifact set:
+
+```
+py scripts/verify_evidence.py
+```
+
 ## 0. Big-specimen provenance (not redistributed here)
 
 `lisp.mb` — SHA-256 recorded in `evidence/hashes/evidence.sha256`
 (371,331,415 bytes). Obtain legitimately from the upstream MalbolgeLISP
-repository (`lisp.zip`, CC0), extract `core.mb` + `init_module.mb`,
+repository (`lisp.zip`; consult upstream for applicable licensing), extract
+`core.mb` + `init_module.mb`,
 verify sizes 371,312,023 and 19,392, concatenate in that order, then check
 the hash. The normalized dump has the same byte count; its full digest is
-in `evidence/anchors/normalize_lisp_anchors_stderr.txt`.
+in `evidence/selected_logs/normalize_lisp_anchors_stderr.txt`.
 
 ## 1. Build the native VM
 
@@ -40,7 +47,7 @@ bolge19.exe <path-to lisp.mb> --normalize normalized.txt
 
 Emits one mnemonic per cell plus ANCHOR lines (rolling SHA-256 every 100M
 cells / 75 s) and the final census on stderr. Compare your final digest
-with `evidence/anchors/normalize_lisp_anchors_stderr.txt`.
+with `evidence/selected_logs/normalize_lisp_anchors_stderr.txt`.
 
 ## 4. Classic agreement suite (cheap)
 

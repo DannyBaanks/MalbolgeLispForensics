@@ -88,3 +88,4 @@ TRAZA (primeros 40 eventos):
       38    136  *     38       42  rotate_write
       39    137  *     39    19724  rotate_write
 
+

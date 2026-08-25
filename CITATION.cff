@@ -18,5 +18,5 @@ keywords:
   - forensics
 related-resources:
   - type: software
-    title: MalbolgeLISP (upstream, CC0)
+    title: MalbolgeLISP (upstream project)
     note: lisp.mb / fast20.c / manual by the upstream author (iczelia/kspalaiologos)

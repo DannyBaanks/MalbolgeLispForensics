@@ -25,7 +25,7 @@ once, artifact present, not re-run), NOT_DEMONSTRATED.
 
 | id | claim | status | evidence |
 |---|---|---|---|
-| C1 | 371,331,415 mnemonics emitted; SHA-256 `bef2a63fc92d28f582c2426d1e61d6c942d89006e3676ce2949d2df78270d794` | DEMONSTRATED | `evidence/anchors/normalize_lisp_anchors_stderr.txt` FINAL anchor |
+| C1 | 371,331,415 mnemonics emitted; SHA-256 `bef2a63fc92d28f582c2426d1e61d6c942d89006e3676ce2949d2df78270d794` | DEMONSTRATED | `evidence/selected_logs/normalize_lisp_anchors_stderr.txt` FINAL anchor |
 | C2 | Anchor checkpoints every 100M cells / 75 s with rolling hash; dual-formula checks 7/7 PASS | DEMONSTRATED | ANCHOR lines in same file |
 | C3 | Census: '/' 150,761,408 · '<' 98,369,120 · '*' 73,798,229 · 'p' 47,934,035 · 'D' 468,609 · 'J' 8 · 'i' 4 · 'v' 1 | DEMONSTRATED | HIST lines in same file |
 

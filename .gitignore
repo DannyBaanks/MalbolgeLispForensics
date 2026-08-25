@@ -25,3 +25,5 @@ dist/*.zip
 *.mb
 !specimens/**/*.mal
 lisp_normalized.txt
+
+*.zip

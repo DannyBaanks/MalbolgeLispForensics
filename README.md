@@ -65,27 +65,40 @@ docs/          claims, architecture, reproduction, honesty ledger
 src/bolge19/   native Zig VM for the 3^19 model
 src/patches/   minimal patch to upstream fast20.c (+ rationale)
 src/diagnostics/mmap_repro.c            minimal Cygwin bug reproducer
-src/validation/ cross-backend test drivers
-third_party/upstream/  snapshot of upstream fast20.c (CC0) used as patch base
+third_party/upstream/  snapshot of upstream fast20.c + upstream license used as patch base
 specimens/     hello world + Quijote chapter I (Translator product + manifest)
 evidence/      curated logs, anchors, manifests, hashes (relative paths only)
 scripts/       one-shot local validation runner
 ```
 
 The giant specimens (`lisp.mb` 371,331,415 bytes; normalized form, same size)
-are **not redistributed here by default**, but they are CC0 too — see
-`docs/REPRODUCTION.md` for provenance and verification instructions.
+are **not redistributed here**. See `docs/REPRODUCTION.md` for provenance and
+verification instructions, and consult the upstream project for the licensing
+terms that apply to the complete MalbolgeLISP distribution.
 
 ## Provenance & attribution
 
-MalbolgeLISP, `fast20.c`, the manual and `lisp.zip` are work by the upstream
-author (iczelia / kspalaiologos), released CC0. Everything in `src/patches`
-derives from their public source; our modifications are clearly marked.
+MalbolgeLISP, `fast20.c`, the manual and `lisp.zip` are upstream work by
+iczelia / kspalaiologos. The `fast20.c` snapshot here is accompanied by the
+upstream CC0 license in `third_party/upstream/LICENSE.upstream`. This repository
+does not attempt to relicense the broader MalbolgeLISP distribution; consult
+upstream for its complete licensing terms. Everything in `src/patches` derives
+from the public `fast20.c` source and our modifications are clearly marked.
 Autobolge/Walbolge/Translator/engine/oracle/toolkit belong to the ISyCo
 research workspace and are referenced, not republished, beyond the small
 specimen/manifest snapshots needed for reproduction.
 
+Public companion repositories used by the classic-side validation include:
+
+- https://github.com/DannyBaanks/Autobolge
+- https://github.com/DannyBaanks/Walbolge
+- https://github.com/DannyBaanks/Malbolge-Translator
+- https://github.com/DannyBaanks/Malbolge-Engine
+- https://github.com/DannyBaanks/malbolge-oracle
+- https://github.com/DannyBaanks/malbolge-differential
+
 ## License
 
-Our additions: MIT (see `LICENSE`). Upstream snapshot: CC0 1.0
-(`third_party/upstream/LICENSE.upstream`).
+Our additions: MIT (see `LICENSE`). Bundled upstream `fast20.c` snapshot: see the accompanying CC0 1.0 text in
+`third_party/upstream/LICENSE.upstream`. Other upstream artifacts are not
+relicensed by this repository.

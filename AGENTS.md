@@ -21,10 +21,11 @@ Experiments happen elsewhere; only frozen, hashed results enter here.
 5. No absolute workstation paths anywhere: manifests use relative paths;
    logs are included only if path-free or sanitized with documented rules.
 6. Large specimens (`*.mb`, normalized dumps) are referenced by SHA-256, not
-   committed. They are CC0, so redistribution is permitted if a human opts in
-   — but it must be an explicit decision, not drift.
-7. Upstream attribution is non-negotiable: MalbolgeLISP/fast20 are CC0 work by
-   their author; our patches/VM are separate and marked.
+   committed. Do not redistribute them from this repository; consult upstream
+   for provenance and the licensing terms that apply to the complete distribution.
+7. Upstream attribution is non-negotiable: MalbolgeLISP/fast20 are upstream work
+   by their author; the bundled fast20 snapshot carries its upstream CC0 license,
+   while our patches/VM are separate and marked.
 
 ## Reproduction entry points
 

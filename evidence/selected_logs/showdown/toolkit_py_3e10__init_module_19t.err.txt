@@ -1,12 +1,12 @@
 ERROR:malbolge.cli.main:Unsupported opcode 'l'.
 Traceback (most recent call last):
-  File "C:\Development\ISyCo\workspace\malbolge_toolkit\malbolge\cli\main.py", line 148, in handle_run
+  File "<LAB>/malbolge_toolkit\malbolge\cli\main.py", line 148, in handle_run
     result = interpreter.execute(opcodes, capture_machine=True)
              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Development\ISyCo\workspace\malbolge_toolkit\malbolge\interpreter.py", line 179, in execute
+  File "<LAB>/malbolge_toolkit\malbolge\interpreter.py", line 179, in execute
     return self._execute_loaded(
            ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Development\ISyCo\workspace\malbolge_toolkit\malbolge\interpreter.py", line 339, in _execute_loaded
+  File "<LAB>/malbolge_toolkit\malbolge\interpreter.py", line 339, in _execute_loaded
     raise MalbolgeRuntimeError(f"Unsupported opcode '{instruction}'.")
 malbolge.interpreter.MalbolgeRuntimeError: Unsupported opcode 'l'.
 [error] Unsupported opcode 'l'.
