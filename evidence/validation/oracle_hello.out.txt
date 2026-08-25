@@ -1,0 +1,2 @@
+OUT: 'Hello World!'
+STEPS: 40 HALTED: True halt_opcode

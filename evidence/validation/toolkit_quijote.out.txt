@@ -1,0 +1,12 @@
+CHAPTER I WHICH TREATS OF THE CHARACTER AND
+PURSUITS OF THE FAMOUS GENTLEMAN DON QUIXOTE OF LA MANCHA
+halt_reason=halt_opcode
+steps=2632
+halt_instruction=v
+last_jump_target=98
+cycle_detected=False
+cycle_tracking_limited=False
+cycle_repeat_length=None
+memory_expansions=0
+peak_tape_cells=2730
+tape_length=2730

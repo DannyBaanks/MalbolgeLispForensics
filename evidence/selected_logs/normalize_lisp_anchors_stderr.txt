@@ -1,0 +1,31 @@
+norm-progress cell=20000000
+norm-progress cell=40000000
+norm-progress cell=60000000
+norm-progress cell=80000000
+norm-progress cell=100000000
+ANCHOR;status=PASS;mode=75s-or-100M;cell=100000000;op_last=68;sha256_rolling=4aec409d9a2acb6f5a59b97942f2ee0bb933ca5813f73ede554bf849e7ade3f5;dual_checks=2;dual_fails=0;t_ms=1765
+norm-progress cell=120000000
+norm-progress cell=140000000
+norm-progress cell=160000000
+norm-progress cell=180000000
+norm-progress cell=200000000
+ANCHOR;status=PASS;mode=75s-or-100M;cell=200000000;op_last=68;sha256_rolling=ba2994d790dd80f352b2216f2be9c923b613bc446ae69ee5eacdac63e8a2d6f3;dual_checks=4;dual_fails=0;t_ms=3265
+norm-progress cell=220000000
+norm-progress cell=240000000
+norm-progress cell=260000000
+norm-progress cell=280000000
+norm-progress cell=300000000
+ANCHOR;status=PASS;mode=75s-or-100M;cell=300000000;op_last=39;sha256_rolling=1834c5edb4718d9f806d1ef205dfeb8eed82973e3e33444382c5a35b9121978e;dual_checks=6;dual_fails=0;t_ms=4750
+norm-progress cell=320000000
+norm-progress cell=340000000
+norm-progress cell=360000000
+ANCHOR;status=PASS;mode=FINAL;cells=371331415;sha256_full=bef2a63fc92d28f582c2426d1e61d6c942d89006e3676ce2949d2df78270d794;dual_checks=7;dual_fails=0;t_ms=5812
+HIST op=4 'D' count=468609
+HIST op=5 'J' count=8
+HIST op=23 'i' count=4
+HIST op=37 '#' count=1
+HIST op=39 '*' count=73798229
+HIST op=40 '<' count=98369120
+HIST op=62 'p' count=47934035
+HIST op=68 '/' count=150761408
+HIST op=81 'v' count=1

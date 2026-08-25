@@ -1,0 +1,11 @@
+Hello World!
+halt_reason=halt_opcode
+steps=40
+halt_instruction=v
+last_jump_target=56
+cycle_detected=False
+cycle_tracking_limited=False
+cycle_repeat_length=None
+memory_expansions=0
+peak_tape_cells=64
+tape_length=64

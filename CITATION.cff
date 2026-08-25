@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: >-
+  Forensic study and native reimplementation for executing MalbolgeLISP v1.2
+  (3^19 Malbolge Unshackled model), with cross-implementation validation of
+  classic Malbolge and a Translator/Walbolge roundtrip.
+title: malbolge-lisp-forensics
+type: dataset
+authors:
+  - alias: ISyCo research workspace
+version: 1.0.0
+date-released: "2026-08-25"
+license: MIT
+keywords:
+  - malbolge
+  - esolang
+  - malbolgelisp
+  - unshackled
+  - forensics
+related-resources:
+  - type: software
+    title: MalbolgeLISP (upstream, CC0)
+    note: lisp.mb / fast20.c / manual by the upstream author (iczelia/kspalaiologos)

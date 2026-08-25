@@ -1,0 +1,742 @@
+{
+ "generated_at": "2026-08-25T07:22:24Z",
+ "path_convention": "relative to repository root",
+ "artifact_count": 147,
+ "artifacts": [
+  {
+   "path": ".gitignore",
+   "bytes": 314,
+   "sha256": "cf6ecf90a8008cdbd71ed90db51bee9ab8b43d7558c7784bd89311b3d0ec387b"
+  },
+  {
+   "path": "AGENTS.md",
+   "bytes": 2096,
+   "sha256": "e6105bd11de8d7f1c8701864b7f8f462db2b33d023409d3e1fcee1a11ac1bd70"
+  },
+  {
+   "path": "CITATION.cff",
+   "bytes": 630,
+   "sha256": "7cacb9d4431cc4e8af10d1133bb2f62300ec0dd9464bcf0e1ddc496e2ed9bdd6"
+  },
+  {
+   "path": "LICENSE",
+   "bytes": 1492,
+   "sha256": "e922e7d34068ba65bb0466f19be10a4d6b8c10ea6bc76fed5b7180eca5e6297a"
+  },
+  {
+   "path": "README.md",
+   "bytes": 3964,
+   "sha256": "4bdad93c17a772b1cdd7060dfa7cb8759bb0cc2d064a559aa4c4cfddae733748"
+  },
+  {
+   "path": "docs/ARCHITECTURE.md",
+   "bytes": 2640,
+   "sha256": "14bc69e16681b9033787bfaabca472acba44625e2db3d7bb06e57e0ee7f6ee1c"
+  },
+  {
+   "path": "docs/CLAIMS.md",
+   "bytes": 3631,
+   "sha256": "31a399f8f4a7dff1ef2899dbab92e624342b3fc2c29642b74f64c555147618d1"
+  },
+  {
+   "path": "docs/EXPERIMENT_SUMMARY.md",
+   "bytes": 3837,
+   "sha256": "4534e8c771c0ab823c392cc4066be384087e82302af88fa7bfb15ca5660c2452"
+  },
+  {
+   "path": "docs/NOT_DEMONSTRATED.md",
+   "bytes": 1835,
+   "sha256": "4ba796600db8be25d24b49599d4c724140d81ebf237af9515be5a9c1e207f9f0"
+  },
+  {
+   "path": "docs/REPRODUCTION.md",
+   "bytes": 2623,
+   "sha256": "6b200ca4a49dfa835ce369a1d1e3f6f1859062c649dadad66724d1998a27c9d1"
+  },
+  {
+   "path": "evidence/selected_logs/bolge19_lisp_session_stderr.txt",
+   "bytes": 1133,
+   "sha256": "1ce90ee3a128e35b88e6c10e99ada6c68b5ada31eb75dc58d76d0c2ff2685253"
+  },
+  {
+   "path": "evidence/selected_logs/bolge19_lisp_session_stdout.txt",
+   "bytes": 291,
+   "sha256": "b3214e2914a175fdac1c3898e7ec8d3b4eef88bcde6da152a551b57d058d02ea"
+  },
+  {
+   "path": "evidence/selected_logs/normalize_lisp_anchors_stderr.txt",
+   "bytes": 1454,
+   "sha256": "77f138fb9cc8907e0733439f1ba664f919f3b3441529191b2d4c80f2a9ee99e9"
+  },
+  {
+   "path": "evidence/selected_logs/walbolge_quijote_ch001.json",
+   "bytes": 96172,
+   "sha256": "3fe00c1880061846247f3b0e2a3416d9ba3e805a322fcce5ef14a7e827e6d87f"
+  },
+  {
+   "path": "evidence/selected_logs/showdown/autobolge_hello.in.bin",
+   "bytes": 281,
+   "sha256": "2101281d215b237895117d19ab6d64bdb08828694ca20a418d47d5b76752b526"
+  },
+  {
+   "path": "evidence/selected_logs/showdown/autobolge_hello.out.bin",
+   "bytes": 51,
+   "sha256": "5d9bd012b67ce919d67343c32cf499c68dc7a1e4c75bcde5be8bf0f6b9e42536"
+  },
+  {
+   "path": "evidence/selected_logs/showdown/autobolge_quijote_ch001.in.bin",
+   "bytes": 10945,
+   "sha256": "c8b3e2c0ca539df7432c29766e70a2d48888d25734b53f4490ec788f43319f3e"
+  },
+  {
+   "path": "evidence/selected_logs/showdown/autobolge_quijote_ch001.out.bin",
+   "bytes": 140,
+   "sha256": "98ec2aabbdbd1dfd68b8638602722c18ed163b700f1bdb30a50670ba7e85b3f1"
+  },
+  {
+   "path": "evidence/selected_logs/showdown/autobolge_zig__hello_classic.err.txt",
+   "bytes": 36,
+   "sha256": "f70978d92edd03c6777e7d782dc0a7edb487a4e193792418fb6c56ebb03022e3"
+  },
+  {
+   "path": "evidence/selected_logs/showdown/autobolge_zig__hello_classic.out.txt",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "evidence/selected_logs/showdown/autobolge_zig__init_module_19t.err.txt",
+   "bytes": 36,
+   "sha256": "f70978d92edd03c6777e7d782dc0a7edb487a4e193792418fb6c56ebb03022e3"
+  },
+  {
+   "path": "evidence/selected_logs/showdown/autobolge_zig__init_module_19t.out.txt",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "evidence/selected_logs/showdown/bolge19_19t__hello_classic.err.txt",
+   "bytes": 66,
+   "sha256": "534984238a9d615f91e9d392a8f03c6eb2150a9e64f20ddf8b3bf248dbeaa328"
+  },
+  {
+   "path": "evidence/selected_logs/showdown/bolge19_19t__hello_classic.out.txt",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "evidence/selected_logs/showdown/bolge19_19t__init_module_19t.err.txt",
+   "bytes": 66,
+   "sha256": "534984238a9d615f91e9d392a8f03c6eb2150a9e64f20ddf8b3bf248dbeaa328"
+  },
+  {
+   "path": "evidence/selected_logs/showdown/bolge19_19t__init_module_19t.out.txt",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "evidence/selected_logs/showdown/engine_3e10__hello_classic.err.txt",
+   "bytes": 28,
+   "sha256": "d7a091761d21e5df5d7bf570de91bbecf23a6fa83c50c4a373b32ebdffcaa1ab"
+  },
+  {
+   "path": "evidence/selected_logs/showdown/engine_3e10__hello_classic.out.txt",
+   "bytes": 14,
+   "sha256": "cfce4e2952591e79a0dea1654a92dba4f099d348ab7c176bcd052d69b8929770"
+  },
+  {
+   "path": "evidence/selected_logs/showdown/engine_3e10__init_module_19t.err.txt",
+   "bytes": 30,
+   "sha256": "26a8093de75fded367b27df88b8c1eeaec9f9f7734427eae048583a998df06a0"
+  },
+  {
+   "path": "evidence/selected_logs/showdown/engine_3e10__init_module_19t.out.txt",
+   "bytes": 2,
+   "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+  },
+  {
+   "path": "evidence/selected_logs/showdown/fast20fixed_19t__hello_classic.err.txt",
+   "bytes": 173,
+   "sha256": "d5bcd91e936b81b46dcf90a694bd7dd76d49868db245ece721d68b60bcdaed98"
+  },
+  {
+   "path": "evidence/selected_logs/showdown/fast20fixed_19t__hello_classic.out.txt",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "evidence/selected_logs/showdown/fast20fixed_19t__init_module_19t.err.txt",
+   "bytes": 173,
+   "sha256": "d5bcd91e936b81b46dcf90a694bd7dd76d49868db245ece721d68b60bcdaed98"
+  },
+  {
+   "path": "evidence/selected_logs/showdown/fast20fixed_19t__init_module_19t.out.txt",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "evidence/selected_logs/showdown/oracle_py_ref__hello_classic.err.txt",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "evidence/selected_logs/showdown/oracle_py_ref__hello_classic.out.txt",
+   "bytes": 65,
+   "sha256": "c83d94e37142b8de84663ec23b0710d02acd239dc5284ce7a3c8a809c2b06df8"
+  },
+  {
+   "path": "evidence/selected_logs/showdown/oracle_py_ref__init_module_19t.err.txt",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "evidence/selected_logs/showdown/oracle_py_ref__init_module_19t.out.txt",
+   "bytes": 57,
+   "sha256": "2891380d6dd97288e3c07b80b081453d3b7fa044ba80e3190e65a1034ac7c0c5"
+  },
+  {
+   "path": "evidence/selected_logs/showdown/summary.jsonl",
+   "bytes": 1431,
+   "sha256": "74dfc31d22d926e441ea9f74331fa6a134ad727145e7e9ea1878b78c0a240d0d"
+  },
+  {
+   "path": "evidence/selected_logs/showdown/toolkit_py_3e10__hello_classic.err.txt",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "evidence/selected_logs/showdown/toolkit_py_3e10__hello_classic.out.txt",
+   "bytes": 225,
+   "sha256": "150e82a72df0af3f039b93a49f8266fee44682d0c5ec3c59fd5e7547d7006968"
+  },
+  {
+   "path": "evidence/selected_logs/showdown/toolkit_py_3e10__init_module_19t.err.txt",
+   "bytes": 776,
+   "sha256": "994fbe4d3d74a1c3076916096350fbac57e51e072ae3272ce11aa56a4242b0f8"
+  },
+  {
+   "path": "evidence/selected_logs/showdown/toolkit_py_3e10__init_module_19t.out.txt",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "evidence/validation/autobolge_hello.err.txt",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "evidence/validation/autobolge_hello.in.bin",
+   "bytes": 281,
+   "sha256": "2101281d215b237895117d19ab6d64bdb08828694ca20a418d47d5b76752b526"
+  },
+  {
+   "path": "evidence/validation/autobolge_hello.out.bin",
+   "bytes": 51,
+   "sha256": "5d9bd012b67ce919d67343c32cf499c68dc7a1e4c75bcde5be8bf0f6b9e42536"
+  },
+  {
+   "path": "evidence/validation/autobolge_hello.out.txt",
+   "bytes": 44,
+   "sha256": "db141bfd79ca014dbd12ded835d10dd7a5d3b8fcd7a9192e11cbaeaf0a702f6b"
+  },
+  {
+   "path": "evidence/validation/autobolge_hello.parsed.txt",
+   "bytes": 45,
+   "sha256": "40bcaaceb6c107fd69b79ccb558ad72df0256bdb87011400f41f3f5564c77586"
+  },
+  {
+   "path": "evidence/validation/autobolge_quijote.err.txt",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "evidence/validation/autobolge_quijote.in.bin",
+   "bytes": 10945,
+   "sha256": "c8b3e2c0ca539df7432c29766e70a2d48888d25734b53f4490ec788f43319f3e"
+  },
+  {
+   "path": "evidence/validation/autobolge_quijote.out.bin",
+   "bytes": 140,
+   "sha256": "98ec2aabbdbd1dfd68b8638602722c18ed163b700f1bdb30a50670ba7e85b3f1"
+  },
+  {
+   "path": "evidence/validation/autobolge_quijote.out.txt",
+   "bytes": 136,
+   "sha256": "dbdf40cdcbf33af5b20f0f86ccd362364ce834b90991a5a379f65b17d60f107d"
+  },
+  {
+   "path": "evidence/validation/autobolge_quijote.parsed.txt",
+   "bytes": 137,
+   "sha256": "1408d7b0092ae8ac2127eb0e17919e3716c0d6e54122b5a258b86946a16fe7c3"
+  },
+  {
+   "path": "evidence/validation/engine_hello.err.txt",
+   "bytes": 28,
+   "sha256": "d7a091761d21e5df5d7bf570de91bbecf23a6fa83c50c4a373b32ebdffcaa1ab"
+  },
+  {
+   "path": "evidence/validation/engine_hello.out.txt",
+   "bytes": 14,
+   "sha256": "cfce4e2952591e79a0dea1654a92dba4f099d348ab7c176bcd052d69b8929770"
+  },
+  {
+   "path": "evidence/validation/engine_quijote.err.txt",
+   "bytes": 30,
+   "sha256": "3d402764a7cc800a8ae4bb15cbcdba9570e83c80842bcc4899615e07cdf13c98"
+  },
+  {
+   "path": "evidence/validation/engine_quijote.out.txt",
+   "bytes": 104,
+   "sha256": "2348959f110276b3eccd8110cbf6caf2ef9b9c6f29483cc8066f4e39fd42e914"
+  },
+  {
+   "path": "evidence/validation/oracle_hello.err.txt",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "evidence/validation/oracle_hello.out.txt",
+   "bytes": 57,
+   "sha256": "730b84758c978a4054036bdc203156bfb1891571d5c818354c3379110d48c5c3"
+  },
+  {
+   "path": "evidence/validation/oracle_quijote.err.txt",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "evidence/validation/oracle_quijote.out.txt",
+   "bytes": 149,
+   "sha256": "19050db9d3ce9a63ffe3c5587eff96342c0304526f6dcea2a11ef14b1553a411"
+  },
+  {
+   "path": "evidence/validation/toolkit_hello.err.txt",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "evidence/validation/toolkit_hello.out.txt",
+   "bytes": 225,
+   "sha256": "150e82a72df0af3f039b93a49f8266fee44682d0c5ec3c59fd5e7547d7006968"
+  },
+  {
+   "path": "evidence/validation/toolkit_quijote.err.txt",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "evidence/validation/toolkit_quijote.out.txt",
+   "bytes": 321,
+   "sha256": "5685b921c68847dfb52d4903780e1d58b0aa6b0867923f6636fa94a9af13b9e3"
+  },
+  {
+   "path": "evidence/validation/verdict.json",
+   "bytes": 191,
+   "sha256": "f0a04046bf903b9d5ebaaeacfbcb2f14e5c23ea096406095a525609e87d4df8f"
+  },
+  {
+   "path": "evidence/validation/walbolge_roundtrip.out.txt",
+   "bytes": 4594,
+   "sha256": "608339be6a5fa1c9d93d0f01d136cbf3c165d1283c5d141bb0358862d2fd81b2"
+  },
+  {
+   "path": "scripts/run_validation.py",
+   "bytes": 6805,
+   "sha256": "751a4fb292387626e2c50317372323ba47870d59c6f059a3a009b30727ef016b"
+  },
+  {
+   "path": "specimens/hello.malbolge",
+   "bytes": 64,
+   "sha256": "956c134aa67fa3fc049bda71406673050b64b18663ee603b16c7b694e13fe6c1"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_full.mal",
+   "bytes": 2730,
+   "sha256": "bfaa91e096e2fba39734607f1109688356da46bb03bb731f97b164edf7794ac3"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_full.op",
+   "bytes": 2730,
+   "sha256": "19093da6b8155e2da4267d21401d0840a83463a0a987dc2e7322866ef5ed67c5"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_manifest.json",
+   "bytes": 438,
+   "sha256": "feb42c44007ec410ce661c60ae020892110fd6b6a95e48fe431cbf24ae12751c"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0000.json",
+   "bytes": 316,
+   "sha256": "67573760b49999ca516d8eb1b9da650014bffeff718ae887cdd39dd95ece61d8"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0000.op",
+   "bytes": 191,
+   "sha256": "060241df0cde751124b205f26217cdbbbc24c6840ed139d6ab664022bfee9ded"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0001.json",
+   "bytes": 149,
+   "sha256": "81040caa7eb0691b16139e2c9a2b23c41dfe12b6e3fedc63b11d8ea98344805f"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0001.op",
+   "bytes": 30,
+   "sha256": "9ce2efc267b0524472ed0057f3fd670f734a37dc292bb3914e387b6986910bd3"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0002.json",
+   "bytes": 137,
+   "sha256": "ad62dd2d389c4f68b633a07cd28a3ccef6eca70d7a5328b6d448789d9c60cec2"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0002.op",
+   "bytes": 18,
+   "sha256": "72ee878f6287ee732d72ee5ff4c05616676170a4c8d3161e1abaa66ff5742b91"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0003.json",
+   "bytes": 128,
+   "sha256": "de5f0680e960fbc928127b789e308921bf166e45432a17b2703d01fa81930c8b"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0003.op",
+   "bytes": 9,
+   "sha256": "489cfa03cbc97c59d60904b6bdb81175be112c2e4a11176edcd2625948cd94d4"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0004.json",
+   "bytes": 209,
+   "sha256": "277dd41591d4e587325af5e877c88e176f09c0f3dca93989e18ab250456924d9"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0004.op",
+   "bytes": 86,
+   "sha256": "92823c39e1284c608a2162574cdc29ef4c9ef6820a42ea7ad142a92cacccdb98"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0005.json",
+   "bytes": 121,
+   "sha256": "069210ec962d88b3367c2a167f4eae31e5b83af0ea7e5595ce79803754e0d4c1"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0005.op",
+   "bytes": 2,
+   "sha256": "f9ebe6a19ea1966cc9baad49b9fac7e900cf63a7089d6f08bfb98349fedab742"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0006.json",
+   "bytes": 426,
+   "sha256": "06b8b8124e411462efb10bd4ce50a05a49a0c7f5f3e8ca09d4d351cb35d32be2"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0006.op",
+   "bytes": 302,
+   "sha256": "a85c5e46c369f4bdbf7b91f1dff3fa003b5a4e62ff744efd292d2ba8319e46b0"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0007.json",
+   "bytes": 149,
+   "sha256": "ceb72eb917af2864e574d027f1050d86da6a51b05c31ed4963b7e004b90ee3b4"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0007.op",
+   "bytes": 30,
+   "sha256": "eb1e26ba3d4ff6bf57d831e286132d86973bdd1a8e8f633c6ffab3102d22fd1e"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0008.json",
+   "bytes": 152,
+   "sha256": "fe35a7ba73bbc588ec873d3dbf662f6643ff38eec9adb52bd219ee1dcd496574"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0008.op",
+   "bytes": 32,
+   "sha256": "a33a73a5611dd930502361596696ac9627d39c792a37eb7095584cfe6dae502c"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0009.json",
+   "bytes": 131,
+   "sha256": "5877a99c1ffffe32686f23fd133d1131715c66bae0d5107e5ecc1d01235b9575"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0009.op",
+   "bytes": 12,
+   "sha256": "76cf611df3e6243ef29c45b68405c622f2073fb70dd25f1a186939f0ab20a6c4"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0010.json",
+   "bytes": 178,
+   "sha256": "c522b16a64c4b962dec5045225b0c646134dd866032a6281e831bb63f921544a"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0010.op",
+   "bytes": 56,
+   "sha256": "727e1bcfaf426c1a83f82bab976553dbf5d36346c74bb2c0ac1c3d0d64df176a"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0011.json",
+   "bytes": 174,
+   "sha256": "5235ebee71b3f423679d977757ab90fb805f616477d797ba202168b4e8d75538"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0011.op",
+   "bytes": 54,
+   "sha256": "6f52e55b09b7e9b9ec1d20773417c7ef2b4aa1ed634ee1035d7a8c588d6fab87"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0012.json",
+   "bytes": 347,
+   "sha256": "feb1d524c20af7b5731954b52a3e936c5bd18d0b514a25a0a373d13fa3483250"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0012.op",
+   "bytes": 219,
+   "sha256": "00fa5b3b1075d0a270fe8d967d85d9926900ffaadb6ec32e5e02fbe716c30bed"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0013.json",
+   "bytes": 144,
+   "sha256": "970e0b4b37bf95bf2480d3a6390e5903c28de24c3024af5221ac56c3ee95f209"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0013.op",
+   "bytes": 24,
+   "sha256": "0510b4f79ff07fa93cd4a9b547c6144ea0ef76dd7abadda7eb397add8c8e0f8e"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0014.json",
+   "bytes": 203,
+   "sha256": "dfe659e2d6694be5497df686abd62fd05f91814d89e2a4ced9848f2ee7d4385c"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0014.op",
+   "bytes": 81,
+   "sha256": "a725ac4c8b8e0d18f2030a0edfa7e7115c3a2684fbaa42943463306671a69bc6"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0015.json",
+   "bytes": 125,
+   "sha256": "d96cdc7765b40540ba49600eae7fa2f4f48b99b20e67235914d54c5c800f1e7f"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0015.op",
+   "bytes": 4,
+   "sha256": "0a6f3e2d3db13cd00d0534e1d2597969328cdbe8482c7a5a56c4864082ae0f50"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0016.json",
+   "bytes": 402,
+   "sha256": "fb1efd9bdc4002332dfe7b2cbb2607c9c76eee25fdc3b9d156993f8678e6d920"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0016.op",
+   "bytes": 275,
+   "sha256": "8ec802002d770f07ec0b888bafde111721498446e6ff214403a3b338e9b38344"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0017.json",
+   "bytes": 150,
+   "sha256": "44c0838c0d7809ada15eee5323d2ece7732bf80486985571a590422e79eae99d"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0017.op",
+   "bytes": 30,
+   "sha256": "5bc8237bab57c8a2f57a5067c2d07c3c2dabc7b4d96b987bd10938d360c221d1"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0018.json",
+   "bytes": 162,
+   "sha256": "025946b8c76c99f05bc89fb2ec206263b009e1e30ad4e3436d935cb6e044f386"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0018.op",
+   "bytes": 41,
+   "sha256": "c6c1ba0dc534f6e76e4555c1406b5fbfa40b4964bfa56cc8175139b4dff824a5"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0019.json",
+   "bytes": 124,
+   "sha256": "da585a73059f238406ba18ac1043146cac7f8e6c93c706789ea7b859eb7861e6"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0019.op",
+   "bytes": 4,
+   "sha256": "b7f6471103f5e39c9ec54113dee4c1f98fbfacde8740e5503b6a13f52e66d9c8"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0020.json",
+   "bytes": 192,
+   "sha256": "9d1470a048603e2ba3d5db7231c695b76903a7e5e1c91bb7544236f3c08a44ac"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0020.op",
+   "bytes": 70,
+   "sha256": "7585ab3947d9149782219faeb4e751d6afc4ed2fdcc47e83865850fbd05f02da"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0021.json",
+   "bytes": 144,
+   "sha256": "601be7f5d709e604bbf4627b48e305caa67928b570d7957be4764630614d2faf"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0021.op",
+   "bytes": 24,
+   "sha256": "0f11ba149d2bbc687343f6e113d7e180eb0916c78a986c9f600a901d7fdb4d2c"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0022.json",
+   "bytes": 286,
+   "sha256": "37cc4527262d96e58b8b9b08934c23b884ed367697c1e5f3fcda333330217af9"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0022.op",
+   "bytes": 161,
+   "sha256": "a72a45f1cc345f9fd37b334aeb7b5f09eaeadd16ceab16ed82faa73d6608e4a0"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0023.json",
+   "bytes": 156,
+   "sha256": "9fd6585dae6290002a110ed9df252b56c9c1d6233a675bdef499368354c21cd0"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0023.op",
+   "bytes": 36,
+   "sha256": "6b7e446a9dce6f04568c31be3469f49383c2baf32fec52f354995eeee940b689"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0024.json",
+   "bytes": 540,
+   "sha256": "24902592cf14012f6302a84ca1499adc07a6590e023f9b2a9d23d0def94e4fbf"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0024.op",
+   "bytes": 412,
+   "sha256": "eb8407e0edfd5becd50052c77b1512aa9ead389e7e2bec11ff69935eda848100"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0025.json",
+   "bytes": 126,
+   "sha256": "784e53e898a94615f14dfd1b92f05799a5d133d1ff203781a8e47fcdc07eba8e"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0025.op",
+   "bytes": 6,
+   "sha256": "edfc719865b3df0cb49ef8fd3205aa657db0701c04474fc679f6333dc11e3adb"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0026.json",
+   "bytes": 216,
+   "sha256": "8e3ec91cdf6a0b8aec603482126aea738ad93207249b529d884041bd6ad3baf0"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0026.op",
+   "bytes": 94,
+   "sha256": "167b56032922863c3936e21a26fdbe487f7d14d3a700c3122f18faa26ead33df"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0027.json",
+   "bytes": 126,
+   "sha256": "44cbfef7135e52f72924dd7822d56dbf2c706889646acffad42580a11357e662"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0027.op",
+   "bytes": 6,
+   "sha256": "91e1511882c9bbc4c02072783093a00c49b6a8b233f509343a0a4637a0a793f0"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0028.json",
+   "bytes": 219,
+   "sha256": "e4265de22b7032a9884cf1ad7b4cdd141f1f2da339c7c1e1dac3bcd98b593fc2"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0028.op",
+   "bytes": 93,
+   "sha256": "e23a57d6d835f6379e7401ce40bfee14d5b1d63f7b5fc86299367fc0ea58af49"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0029.json",
+   "bytes": 128,
+   "sha256": "672a68e2b0ac31b66859fb8d375f015d9e0b04e43b656cbe7779fcf57cd2443a"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0029.op",
+   "bytes": 8,
+   "sha256": "d54389f94ef28f95e75e89df2987fef4a6348322670aae6d385c6d1cb4e187e0"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0030.json",
+   "bytes": 190,
+   "sha256": "b9019ca475f1f4136748160bcb87782f9e896a486f032c365236b34fee461aa3"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0030.op",
+   "bytes": 69,
+   "sha256": "b2b0f81062fdf61bef750c0a1c93f5df652b34dffdbf83d01d0548cb0e3503d1"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0031.json",
+   "bytes": 123,
+   "sha256": "97724cc3736f1ebbe5121ea8f9caf677622a1881c00d2fe4be0bca7ce3308463"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0031.op",
+   "bytes": 3,
+   "sha256": "1a867e231fc58347ed7026b899e53450e3d32766aea7addaa9ca8174610e3b2d"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0032.json",
+   "bytes": 143,
+   "sha256": "d0b3f76670eba7341a3be71c20e253f55dc286729d545c26cac46d76a55a7541"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0032.op",
+   "bytes": 22,
+   "sha256": "4ae7ba9b6307380eaaaacfed58d47213b200e1dc5f2ad3da4b315ee75b945921"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0033.json",
+   "bytes": 126,
+   "sha256": "fa22958eceee80e5d99952f747ea8181ee727a9ac34fa54799ef82cd60e7235d"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0033.op",
+   "bytes": 6,
+   "sha256": "5b0c9eba2cb8adb3f893d050ddadb5ecc00ddf2398b366f146ae1209f67d4d0a"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0034.json",
+   "bytes": 245,
+   "sha256": "2d78d8981b36de5703232889233c94bb317b0cb9193e0089d3e1d31d7527eb4b"
+  },
+  {
+   "path": "specimens/quijote/chapter_001/quijote_ch001_word_0034.op",
+   "bytes": 120,
+   "sha256": "92674498cd2916500802efe4dc3b6b61b47c6fd5b7dbcabd95f13f6613e7f0e4"
+  },
+  {
+   "path": "src/bolge19/main.zig",
+   "bytes": 15691,
+   "sha256": "7ab028ccbf444eb70cd81198dc38fd80556348c34e2b6deaaa1121c6fa5965e6"
+  },
+  {
+   "path": "src/diagnostics/mmap_repro.c",
+   "bytes": 903,
+   "sha256": "6fbc6c28d53c3ead4ee3072d6c236aad722f6dc5353df10de67c95ce1bbef770"
+  },
+  {
+   "path": "src/patches/fast20_fixed.c",
+   "bytes": 5490,
+   "sha256": "8094ceb4688c464250027591e6a8ba6f4ae5ffb03f71abe4bbc48003804954ce"
+  },
+  {
+   "path": "third_party/upstream/LICENSE.upstream",
+   "bytes": 7048,
+   "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499"
+  },
+  {
+   "path": "third_party/upstream/fast20.c",
+   "bytes": 3144,
+   "sha256": "607467b591f3446e7e54dfccfee0fff867a03f325ca2767ff49be71e8a431143"
+  }
+ ]
+}

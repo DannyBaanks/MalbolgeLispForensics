@@ -1,0 +1,15 @@
+{
+  "original": "CHAPTER I WHICH TREATS OF THE CHARACTER AND\nPURSUITS OF THE FAMOUS GENTLEMAN DON QUIXOTE OF LA MANCHA",
+  "processed": "CHAPTER I WHICH TREATS OF THE CHARACTER AND\nPURSUITS OF THE FAMOUS GENTLEMAN DON QUIXOTE OF LA MANCHA",
+  "words": 35,
+  "anchors": [
+    "default"
+  ],
+  "opcodes": 2730,
+  "stats": {
+    "words": 35,
+    "evaluations": 139512,
+    "duration_s": 9.1814034,
+    "anchors_used": 1
+  }
+}

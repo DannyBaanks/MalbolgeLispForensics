@@ -1,0 +1,90 @@
+﻿================================================================
+WALBOLGE — decompilación inversa del Translator
+================================================================
+Fuente     : <REPO>\specimens\quijote\chapter_001\quijote_ch001_full.mal
+Chars      : 2,730 | Opcodes: 2,730 | No-opcode: 0
+Bootstrap  : SI (0-100)
+Ejecución  : 2,632 pasos | halt=halt_opcode | memoria pico=2,730
+Output     : 101 chars | palabras: 35
+Posiciones : 96.4% ejecutadas | 98 nunca ejecutadas
+Saltos     : 1 (guardados 1)
+Roundtrip  : processed=True original=True words=True opcodes=True
+Word files : status=checked found=35 concat_match=True halt_v_in_last=True
+
+SEGMENTOS:
+  [     bootstrap] opcodes 0-100  estado ancla (i + o*99)
+  [ continuations] opcodes 100-2729  35 palabras, 101 chars
+  [          halt] opcodes 2729-2730  opcode 'v'
+
+TEXTO RECONSTRUIDO:
+'CHAPTER I WHICH TREATS OF THE CHARACTER AND\nPURSUITS OF THE FAMOUS GENTLEMAN DON QUIXOTE OF LA MANCHA'
+
+REGIONES (span -> output -> comportamiento):
+  span               output          steps escrituras  opcodes ejecutados
+  [100,291)          'CHAPTER'         191         95  **80 <*7 o*89 p*15
+  [291,321)          ' '                30         15  **13 <*1 o*14 p*2
+  [321,339)          'I'                18         10  **7 <*1 o*7 p*3
+  [339,348)          ' '                 9          4  **4 <*1 o*4
+  [348,434)          'WHICH'            86         42  **31 <*5 o*39 p*11
+  [434,436)          ' '                 2          1  **1 <*1
+  [436,738)          'TREATS'          302        147  **138 <*6 o*149 p*9
+  [738,768)          ' '                30         15  **13 <*1 o*14 p*2
+  [768,800)          'OF'               32         17  **13 <*2 o*13 p*4
+  [800,812)          ' '                12          6  **4 <*1 o*5 p*2
+  [812,868)          'THE'              56         27  **21 <*3 o*26 p*6
+  [868,922)          ' '                54         27  **25 <*1 o*26 p*2
+  [922,1141)         'CHARACTER'       219        107  **93 <*9 o*103 p*14
+  [1141,1165)        ' '                24         11  **9 <*1 o*12 p*2
+  [1165,1246)        'AND'              81         42  **34 <*3 o*36 p*8
+  [1246,1250)        '\n'                4          2  <*1 o*1 p*2
+  [1250,1525)        'PURSUITS'        275        132  **119 <*8 o*135 p*13
+  [1525,1555)        ' '                30         14  **12 <*1 o*15 p*2
+  [1555,1596)        'OF'               41         19  **16 <*2 o*20 p*3
+  [1596,1600)        ' '                 4          3  <*1 p*3
+  ... y 15 regiones más (ver --json)
+
+  OK: los 35 word files alinean exactamente con el .op
+
+TRAZA (primeros 40 eventos):
+    step      c op      d  a_antes  evento
+       0      0  i      0        0  jump_c -> 98
+       1     99  o      1        0  nop
+       2    100  *      2        0  rotate_write
+       3    101  *      3       22  rotate_write
+       4    102  o      4    39387  nop
+       5    103  o      5    39387  nop
+       6    104  *      6    39387  rotate_write
+       7    105  o      7    39386  nop
+       8    106  *      8    39386  rotate_write
+       9    107  *      9       20  rotate_write
+      10    108  o     10    39385  nop
+      11    109  o     11    39385  nop
+      12    110  *     12    39385  rotate_write
+      13    111  o     13    39384  nop
+      14    112  *     14    39384  rotate_write
+      15    113  *     15       18  rotate_write
+      16    114  o     16    39383  nop
+      17    115  o     17    39383  nop
+      18    116  *     18    39383  rotate_write
+      19    117  o     19    39382  nop
+      20    118  *     20    39382  rotate_write
+      21    119  *     21       16  rotate_write
+      22    120  o     22    39381  nop
+      23    121  o     23    39381  nop
+      24    122  *     24    39381  rotate_write
+      25    123  o     25    39380  nop
+      26    124  *     26    39380  rotate_write
+      27    125  *     27       14  rotate_write
+      28    126  o     28    39379  nop
+      29    127  o     29    39379  nop
+      30    128  *     30    39379  rotate_write
+      31    129  o     31    39378  nop
+      32    130  *     32    39378  rotate_write
+      33    131  *     33       12  rotate_write
+      34    132  o     34    39377  nop
+      35    133  o     35    39377  nop
+      36    134  *     36    39377  rotate_write
+      37    135  o     37       42  nop
+      38    136  *     38       42  rotate_write
+      39    137  *     39    19724  rotate_write
+

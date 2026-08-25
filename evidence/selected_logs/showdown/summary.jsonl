@@ -1,0 +1,12 @@
+{"contender": "bolge19_19t", "specimen": "hello_classic", "rc": 0, "how": "exit", "secs": 0.11, "stdout_bytes": 0}
+{"contender": "bolge19_19t", "specimen": "init_module_19t", "rc": 0, "how": "exit", "secs": 0.01, "stdout_bytes": 0}
+{"contender": "fast20fixed_19t", "specimen": "hello_classic", "rc": 3, "how": "exit", "secs": 0.08, "stdout_bytes": 0}
+{"contender": "fast20fixed_19t", "specimen": "init_module_19t", "rc": 3, "how": "exit", "secs": 0.04, "stdout_bytes": 0}
+{"contender": "engine_3e10", "specimen": "hello_classic", "rc": 0, "how": "exit", "secs": 0.02, "stdout_bytes": 14}
+{"contender": "engine_3e10", "specimen": "init_module_19t", "rc": 0, "how": "exit", "secs": 0.09, "stdout_bytes": 2}
+{"contender": "autobolge_zig", "specimen": "hello_classic", "rc": 1, "how": "exit", "secs": 0.02, "stdout_bytes": 0}
+{"contender": "autobolge_zig", "specimen": "init_module_19t", "rc": 1, "how": "exit", "secs": 0.0, "stdout_bytes": 0}
+{"contender": "toolkit_py_3e10", "specimen": "hello_classic", "rc": 0, "how": "exit", "secs": 0.12, "stdout_bytes": 225}
+{"contender": "toolkit_py_3e10", "specimen": "init_module_19t", "rc": 1, "how": "exit", "secs": 0.17, "stdout_bytes": 0}
+{"contender": "oracle_py_ref", "specimen": "hello_classic", "rc": 0, "how": "exit", "secs": 0.19, "stdout_bytes": 65}
+{"contender": "oracle_py_ref", "specimen": "init_module_19t", "rc": 0, "how": "exit", "secs": 0.3, "stdout_bytes": 57}

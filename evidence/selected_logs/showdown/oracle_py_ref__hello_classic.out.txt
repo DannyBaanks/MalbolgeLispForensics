@@ -1,0 +1,2 @@
+OUT: 'Hello World!'
+HALTED: True REASON: halt_opcode STEPS: 40

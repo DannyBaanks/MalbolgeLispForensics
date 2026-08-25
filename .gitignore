@@ -1,0 +1,27 @@
+# build artifacts
+*.exe
+*.pdb
+*.dll
+*.obj
+*.o
+zig-out/
+.zig-cache/
+
+# python
+__pycache__/
+*.pyc
+.venv/
+
+# editor / os
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
+
+# generated packages (recreated by scripts)
+dist/*.zip
+
+# large specimens are referenced by hash, never committed
+*.mb
+!specimens/**/*.mal
+lisp_normalized.txt

@@ -1,0 +1,9 @@
+MALBOLGELISP V1.2 (2020-2021, PALAIOLOGOS)
+DOT COMMANDS:  .F(eatures)  .A(uthor)  .R(eset)  .M(emory)  .S(ymbols)  .E(xport)  .I(mport)
+% ......|....
+3
+% 
+There is a sky illuminating us
+Someone is out there that we truly trust
+There is a rainbow for you and me
+A beautiful sunrise eternally

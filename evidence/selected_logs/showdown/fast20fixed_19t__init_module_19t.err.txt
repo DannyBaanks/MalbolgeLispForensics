@@ -1,0 +1,5 @@
+DBG [0.0s] start argc=1 argv1=(none)
+DBG [0.0s] reserve done mem=0x6ffeeae50000
+DBG [0.0s] heartbeat DISABLED
+DBG [0.0s] fopen=0x0 argv1=(none) errno=14
+DBG ABORT_NULL_FILE

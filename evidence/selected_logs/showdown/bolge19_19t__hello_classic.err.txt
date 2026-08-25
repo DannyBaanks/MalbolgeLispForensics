@@ -1,0 +1,1 @@
+uso: bolge19 <imagen.mb> [--max-steps N] [--normalize salida.txt]

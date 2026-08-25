@@ -1,0 +1,11 @@
+{
+ "hello_agreement_backends": 4,
+ "hello_backends": [
+  "engine_hello",
+  "oracle_hello",
+  "toolkit_hello",
+  "autobolge_hello"
+ ],
+ "quijote_agreement_backends": 4,
+ "ok": true
+}
