@@ -1,94 +1,94 @@
-# MalbolgeLISP Forensics
+# Forensics de MalbolgeLISP
 
-Reproducible forensics for **MalbolgeLISP v1.2** — an unusually large program
-written in the Malbolge-family esoteric language, targeting a **3^19 memory
-model** (Malbolge "Unshackled" style, fixed rotation width 19) — plus a
-cross-implementation validation suite for classic 3^10 Malbolge.
+Forensics reproducibles para **MalbolgeLISP v1.2** — un programa inusualmente grande
+escrito en el lenguaje esoterico familia Malbolge, apuntando a un **modelo de memoria 3^19**
+(Malbolge "Unshackled", ancho de rotacion fijo 19) — mas un
+suite de validacion cross-implementation para Malbolge clasico 3^10.
 
-This repository answers three questions with runnable evidence:
+Este repositorio responde tres preguntas con evidencia ejecutable:
 
-1. Why does the upstream-bundled `fast20` interpreter hang on some Windows
-   configurations, and what exactly is the defect?
-2. How can the full 371 MB MalbolgeLISP image be executed natively on Windows,
-   and what does a correct run look like?
-3. Can independent implementations agree on classic Malbolge semantics down to
-   identical step counts?
+1. ¿Por que el interprete empaquetado upstream `fast20` se cuelga en algunas configuraciones de Windows,
+   y cual es exactamente el defecto?
+2. ¿Como se puede ejecutar nativamente en Windows la imagen completa de 371 MB de MalbolgeLISP,
+   y como se ve una ejecucion correcta?
+3. ¿Pueden implementaciones independientes concordar en la semantica de Malbolge clasico hasta
+   conteos de pasos identicos?
 
-## The pipeline we validated
+## El pipeline que validamos
 
 ```
-ordinary text
-    |  Translator (anchor harness)
+texto ordinario
+    |  Traductor (harness de ancla)
     v
-Malbolge program (.mal)
-    |  multiple distinct backends: C engine / Python oracle /
-   |   Python toolkit / Zig VM
+Programa Malbolge (.mal)
+    |  multiples backends distintos: motor C / oraculo Python /
+   |   toolkit Python / VM Zig
     v
-exact output (byte-identical, identical step counts)
-    |  Walbolge (inverse translation)
+output exacto (byte-identico, conteos de pasos identicos)
+    |  Walbolge (traduccion inversa)
     v
-reconstructed representation == original text (roundtrip verified)
+representacion reconstruida == texto original (roundtrip verificado)
 ```
 
-Two worlds are kept strictly separate throughout:
+Dos mundos se mantienen estrictamente separados durante todo:
 
-| World | Word size | Memory | Specimens here |
+| Mundo | Word size | Memoria | Especimenes aqui |
 |---|---|---|---|
-| CLASSIC MALBOLGE | 10 trits (3^10 = 59,049 cells) | tiny | hello world, Quijote ch. I |
-| MALBOLGELISP | 19 trits (3^19 = 1,162,261,467 cells) | ~371 MB image | `lisp.mb` (see below) |
+| MALBOLGE CLASICO | 10 trits (3^10 = 59,049 celdas) | diminuto | hello world, Quijote cap. I |
+| MALBOLGELISP | 19 trits (3^19 = 1,162,261,467 celdas) | ~371 MB de imagen | `lisp.mb` (ver abajo) |
 
-**Walbolge does NOT decompile the 3^19 monster.** It decompiles
-Translator-produced 3^10 programs; that boundary is demonstrated and enforced
-by design.
+**Walbolge NO decompila el monstruo 3^19.** Decompila
+programas 3^10 producidos por el Translator; ese limite esta demostrado y reforzado
+por diseno.
 
-## Headline results (all reproducible, see docs/CLAIMS.md)
+## Resultados principales (todos reproducibles, ver docs/CLAIMS.md)
 
-- The upstream `fast20.c` hangs because Cygwin's `mmap(MAP_FIXED)` returns
-  `EINVAL` over its own `PROT_NONE` reservation on this platform, and fast20
-  ignores the return value. A 25-line reproducer is included
+- El `fast20.c` upstream se cuelga porque `mmap(MAP_FIXED)` de Cygwin retorna
+  `EINVAL` sobre su propia reserva `PROT_NONE` en esta plataforma, y fast20
+  ignora el valor de retorno. Se incluye un reproductor de 25 lineas
   (`src/diagnostics/mmap_repro.c`).
-- A one-call fix (`mprotect` instead of `mmap(MAP_FIXED)`) makes fast20 load
-  the 371 MB image in ~2 s and execute at ~5.7e8 steps/s on the test machine.
-- `bolge19`, a from-scratch native Windows VM written in Zig (no Cygwin, no
-  mmap tricks), boots the complete MalbolgeLISP v1.2 REPL, evaluates
-  `(+ 1 2)` -> `3`, prints its farewell verse on EOF, and terminates cleanly:
-  **HALT at 2,408,246,381 steps in 75 s** (single core).
-- Classic Malbolge agreement across four distinct backends:
-  hello world = `"Hello World!"` at exactly **40 steps**;
-  Quijote chapter I heading at exactly **2632 steps**.
-- Translator -> Walbolge roundtrip: all four verification flags True.
+- Un fix de una llamada (`mprotect` en vez de `mmap(MAP_FIXED)`) hace que fast20 cargue
+  la imagen de 371 MB en ~2 s y ejecute a ~5.7e8 pasos/s en la maquina de prueba.
+- `bolge19`, una VM nativa de Windows escrita en Zig desde cero (sin Cygwin, sin
+  tricks de `mmap`), arranca la REPL completa de MalbolgeLISP v1.2, evalua
+  `(+ 1 2)` -> `3`, imprime su versiculo de despedida en EOF, y termina limpiamente:
+  **HALT en 2,408,246,381 pasos en 75 s** (un solo nucleo).
+- Concordancia de Malbolge clasico en cuatro backends distintos:
+  hello world = `"Hello World!"` en exactamente **40 pasos**;
+  encabezado del capitulo I del Quijote en exactamente **2632 pasos**.
+- Roundtrip Translator → Walbolge: las cuatro banderas de verificacion en True.
 
-## Repository layout
+## Layout del repositorio
 
 ```
-docs/          claims, architecture, reproduction, honesty ledger
-src/bolge19/   native Zig VM for the 3^19 model
-src/patches/   minimal patch to upstream fast20.c (+ rationale)
-src/diagnostics/mmap_repro.c            minimal Cygwin bug reproducer
-third_party/upstream/  snapshot of upstream fast20.c + upstream license used as patch base
-specimens/     hello world + Quijote chapter I (Translator product + manifest)
-evidence/      curated logs, anchors, manifests, hashes (relative paths only)
-scripts/       one-shot local validation runner
+docs/          claims, arquitectura, reproduccion, ledger de honestidad
+src/bolge19/   VM nativa Zig para el modelo 3^19
+src/patches/   parche minimal a upstream fast20.c (+ justificacion)
+src/diagnostics/mmap_repro.c            reproductor minimal de bug Cygwin
+third_party/upstream/  snapshot de upstream fast20.c + licencia upstream usada como base del parche
+specimens/     hello world + Quijote cap. I (producto del Translator + manifest)
+evidence/      logs curados, anclas, manifests, hashes (solo rutas relativas)
+scripts/       runner local de validacion one-shot
 ```
 
-The giant specimens (`lisp.mb` 371,331,415 bytes; normalized form, same size)
-are **not redistributed here**. See `docs/REPRODUCTION.md` for provenance and
-verification instructions, and consult the upstream project for the licensing
-terms that apply to the complete MalbolgeLISP distribution.
+Los especimenes gigantes (`lisp.mb` 371,331,415 bytes; forma normalizada, mismo tamano)
+**no se redistribuyen aqui**. Ver `docs/REPRODUCTION.md` para procedencia e
+instrucciones de verificacion, y consultar el upstream para los terminos de licencia
+que aplican a la distribucion completa de MalbolgeLISP.
 
-## Provenance & attribution
+## Procedencia y atribucion
 
-MalbolgeLISP, `fast20.c`, the manual and `lisp.zip` are upstream work by
-iczelia / kspalaiologos. The `fast20.c` snapshot here is accompanied by the
-upstream CC0 license in `third_party/upstream/LICENSE.upstream`. This repository
-does not attempt to relicense the broader MalbolgeLISP distribution; consult
-upstream for its complete licensing terms. Everything in `src/patches` derives
-from the public `fast20.c` source and our modifications are clearly marked.
-Autobolge/Walbolge/Translator/engine/oracle/toolkit belong to the ISyCo
-research workspace and are referenced, not republished, beyond the small
-specimen/manifest snapshots needed for reproduction.
+MalbolgeLISP, `fast20.c`, el manual y `lisp.zip` son trabajo upstream de
+iczelia / kspalaiologos. El snapshot de `fast20.c` aqui va acompanado de la
+licencia CC0 upstream en `third_party/upstream/LICENSE.upstream`. Este repositorio
+no intenta re-licenciar la distribucion completa de MalbolgeLISP; consultar
+upstream para sus terminos de licencia completos. Todo en `src/patches` se deriva
+del fuente publico `fast20.c` y nuestras modificaciones estan claramente marcadas.
+Autobolge/Walbolge/Translator/engine/oracle/toolkit pertenecen al workspace de
+investigacion ISyCo y se referencian, no se re-publican, mas alla de los pequenos
+snapshots de specimens/manifest necesarios para reproduccion.
 
-Public companion repositories used by the classic-side validation include:
+Repositorios publicos companeros usados por la validacion del lado clasico incluyen:
 
 - https://github.com/DannyBaanks/Autobolge
 - https://github.com/DannyBaanks/Walbolge
@@ -97,8 +97,8 @@ Public companion repositories used by the classic-side validation include:
 - https://github.com/DannyBaanks/malbolge-oracle
 - https://github.com/DannyBaanks/malbolge-differential
 
-## License
+## Licencia
 
-Our additions: MIT (see `LICENSE`). Bundled upstream `fast20.c` snapshot: see the accompanying CC0 1.0 text in
-`third_party/upstream/LICENSE.upstream`. Other upstream artifacts are not
-relicensed by this repository.
+Nuestras adiciones: MIT (ver `LICENSE`). Snapshot empaquetado upstream `fast20.c`: ver el texto CC0 1.0 acompanante en
+`third_party/upstream/LICENSE.upstream`. Otros artifacts upstream no estan
+re-licenciados por este repositorio.
