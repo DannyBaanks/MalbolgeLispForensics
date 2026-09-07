@@ -1,6 +1,6 @@
 ﻿// bolge19 - VM Malbolge Unshackled ancho FIJO 19 trits (END=3^19).
 // Composicion: arquitectura estilo Autobolge (overlay + cadena perezosa por
-// bloques, cf. ISyCo Git/Autobolge/zig/vm.zig) + semantica EXACTA fast20.c
+// bloques, cf. the Autobolge repo's zig/vm.zig) + semantica EXACTA fast20.c
 // (iczelia/malbolge-lisp): decode por-regiones offs[], encrypt sobre tabla
 // concatenada de 135 chars, c++ y d++ por ciclo.
 // I/O via Win32 directo (estable frente al churn de std.Io en zig 0.16).
