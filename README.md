@@ -7,7 +7,7 @@ suite de validacion cross-implementation para Malbolge clasico 3^10, y el framew
 
 Este repositorio responde cuatro preguntas con evidencia ejecutable:
 
-1. ¿Por que el interprete empaquetado upstream `fast20` se cuelga en Windows (Cygwin `EINVAL`) y en Linux (lectura fuera de limites en tabla cifrada), y como se reparo?
+1. ¿Por qué el intérprete empaquetado upstream `fast20` fallaba en Windows (Cygwin `EINVAL`) y enmascaraba en Linux una lectura fuera de límites en la tabla de cifrado, y cómo se reparó de raíz?
 2. ¿Como se ejecuta de forma nativa y multiplataforma (Linux y Windows) la imagen completa de 371 MB de MalbolgeLISP, alcanzando >300M pasos/segundo?
 3. ¿Como se conecta MalbolgeLISP 3^19 con los avances modernos de Malbolge (`MalbolgeFree` y la escalera parametrica $w=10 \to 19$, `MALBOLGE-MB-DATABASE` y MBIR)?
 4. ¿Pueden implementaciones independientes concordar en la semantica de Malbolge clasico hasta conteos de pasos identicos?
@@ -42,10 +42,11 @@ por diseno.
 
 ## Resultados principales (todos reproducibles, ver docs/CLAIMS.md y docs/LINUX_BENCHMARK_AND_EVOLUTION.md)
 
-- **Correccion de `fast20.c` en Windows y Linux:**
-  - *Windows:* Upstream se colgaba porque `mmap(MAP_FIXED)` de Cygwin retornaba `EINVAL` sobre su propia reserva `PROT_NONE`. Se corrigio con `mprotect`.
-  - *Linux:* `fast20` crasheaba con `SIGSEGV` en `NXT` debido a indexacion fuera de limites en la tabla de cifrado (`xlat[mem[c]]`) cuando `mem[c] >= 135` (e.g. 581M). Se anadio la guarda `if (mem[c] < 135)`.
-- **Rendimiento record en Linux:** `fast20_fixed` ejecuta los **2,401,426,208 pasos** de la sesion completa de `lisp.mb` en solo **7.4 segundos** (~324.5M pasos/s), evaluando `(+ 1 2)` -> `3` y emitiendo el verso de despedida.
+- **Correccion y diagnóstico forense profundo de `fast20.c`:**
+  - *Windows (Cygwin `EINVAL`):* Upstream se colgaba al 100% de CPU porque `mmap(MAP_FIXED)` de Cygwin retornaba `EINVAL` sobre su propia reserva `PROT_NONE`. Se corrigio sustituyendo `mmap` por `mprotect(PROT_READ|PROT_WRITE)`.
+  - *Linux (La trampa de enmascaramiento con `mmap` vs `mprotect`):* En Linux, upstream indexaba sin límites en la tabla de cifrado (`xlat[mem[c]]` en `NXT`) cuando `mem[c] >= 135` (e.g. 581M tras `crz`/`rot`). Originalmente esto no crasheaba porque el `sigsegvh` upstream llamaba a `mmap(MAP_FIXED)` sobre la dirección fuera de `.rodata`, asignando silenciosamente páginas anónimas espurias y leyendo basura en caliente. Al aplicar el parche de `mprotect` para portabilidad, `mprotect` rechazó la dirección no mapeada (`ENOMEM`), dejando al descubierto la lectura ilegal de memoria. Se implementó la solución canónica: guarda de límites estricta `if (mem[c] < 135) mem[c] = xlat[mem[c]];`, que el compilador traduce a un `cmp $0x86` (`134`) directo en ensamblador sin costo de predicción de saltos.
+  - *Protocolo de finalización limpia (`EOF`):* Se formalizó el ciclo de vida interactivo de la sesión completa: el envío de `EOF` (`\x04` / `Ctrl+D`) activa `INS_23 (CR == EOF ? END - 1 : CR)`, lo que desencadena la emisión del poema de despedida y culmina en una salida limpia y determinista con código `0` en `INS_81`.
+- **Rendimiento record en Linux:** `fast20_fixed` ejecuta los **2,401,426,208 pasos** de la sesion completa de `lisp.mb` en solo **7.4 segundos** (~324.5M pasos/s), evaluando `(+ 1 2)` -> `3` y emitiendo el verso de despedida con terminación limpia `exit: 0`.
 - **`bolge19` Multiplataforma (Zig 0.16.0):** VM nativa escrita en Zig desde cero, ahora completamente portada a C ABI / POSIX para compilar tanto en Linux como en Windows sin trucos de `mmap`. En el especimen `init_module.mb` concuerda al 100% con C en exactamente **19,337 pasos** (`c=19435`, `d=19`, `a=710270897`) en **0.00 s**.
 - **Danny Opera Solver integrado:** Framework de sintesis y evaluacion en $Z^4$ con 4 estrategias (`Exhaustive`, `Simulated Annealing`, `Meta`, `Ablative`) ejecutadas en **0.11 s** en Linux.
 - **Concordancia de Malbolge clasico en cuatro backends:**
