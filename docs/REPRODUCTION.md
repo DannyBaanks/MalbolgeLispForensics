@@ -62,14 +62,31 @@ available, writing raw stdout/stderr/exit codes under
 `evidence/validation/`. Expected: "Hello World!" at 40 steps everywhere;
 Quijote text at 2632 steps.
 
-## 5. fast20 patch (optional)
+## 5. fast20 patch (Windows and Linux)
 
-Apply `src/patches/fast20_fixed.c` logic to any fast20 checkout: the only
-semantic-neutral change is replacing both `mmap(MAP_FIXED)` protection
-flips with `mprotect`. First reproduce the original defect with
-`src/diagnostics/mmap_repro.c` compiled under Cygwin gcc:
-expected output contains `flip-fixed r=0xffffffffffffffff` (MAP_FAILED)
-and `Invalid argument`.
+We provide both a production clean interpreter (`src/patches/fast20_clean.c`), an
+instrumented diagnostic version (`src/patches/fast20_fixed.c`), and a unified patch
+(`src/patches/fast20.patch`) applicable against `third_party/upstream/fast20.c`.
+
+Two defects are repaired:
+1. **Windows / Cygwin `EINVAL`:** Upstream used `mmap(MAP_FIXED)` inside `sigsegvh`, which
+   fails with `EINVAL` over a `PROT_NONE` reservation on Cygwin, causing an infinite retry loop
+   at 100% CPU. Fixed by using `mprotect(PROT_READ|PROT_WRITE)`.
+   Reproduce the original Cygwin defect with `src/diagnostics/mmap_repro.c`: expected output
+   contains `flip-fixed r=0xffffffffffffffff` (MAP_FAILED) and `Invalid argument`.
+2. **Linux `.rodata` read overflow:** Upstream indexed the 135-byte encryption table directly
+   (`xlat[mem[c]]`). When `mem[c] >= 135` after `crz`/`rot`, Linux ELF throws `SIGSEGV` when reading
+   outside `.rodata`. Fixed with the bounds check `if (mem[c] < 135)`.
+
+Build clean production interpreter:
+```
+gcc -O3 src/patches/fast20_clean.c -o fast20
+```
+
+Build instrumented diagnostic interpreter:
+```
+gcc -O3 src/patches/fast20_fixed.c -o src/patches/fast20_fixed
+```
 
 ## 6. Translator/Walbolge roundtrip
 

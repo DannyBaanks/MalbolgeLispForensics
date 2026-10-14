@@ -1,0 +1,53 @@
+--- a/fast20.c
++++ b/fast20.c
+@@ -1,3 +1,26 @@
++/*
++ * MalbolgeLISP - fast20_clean.c (Minimal Portability Patched Interpreter)
++ *
++ * ORIGINAL WORK ATTRIBUTION:
++ *   Author: Iczelia (formerly kspalaiologos), 2020-2021.
++ *   Original Repository: https://github.com/iczelia/malbolge-lisp
++ *   Book & Documentation: "MalbolgeLisp" (2021) by Iczelia
++ *   License: CC0 1.0 Universal / Public Domain
++ *
++ * FORENSICS & PATCH:
++ *   Part of the ISyCo MalbolgeLISP Forensics Suite (DannyBaanks)
++ *   Repository: https://github.com/DannyBaanks/malbolge-lisp-forensics
++ *   Original pristine code: third_party/upstream/fast20.c
++ *   Diagnostic/telemetry version: src/patches/fast20_fixed.c
++ *
++ * DEFECTS REPAIRED:
++ *   1. Windows / Cygwin EINVAL hang: Replaced mmap(MAP_FIXED) with mprotect() in mpstb().
++ *      On Cygwin, mmap(MAP_FIXED) on a PROT_NONE reservation returned EINVAL,
++ *      causing an infinite SIGSEGV retry loop at 100% CPU.
++ *   2. Linux .rodata read overflow: Added bounds check `if (mem[c] < 135)` in NXT.
++ *      The encryption table is 135 bytes. Large opcodes (e.g. 581M after crz/rot)
++ *      caused out-of-bounds reads beyond .rodata, resulting in SIGSEGV on Linux.
++ */
+ 
+ #include <stdio.h>
+ #include <stdlib.h>
+@@ -36,7 +59,7 @@
+ P u64 pgsiz;
+ P W*mem,pat[6];
+ 
+-P void mpstb(void*b,u64 l){mmap(b,l,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANON|MAP_FIXED,-1,0);}
++P void mpstb(void*b,u64 l){mprotect(b,l,PROT_READ|PROT_WRITE);}
+ 
+ P void sigsegvh(int n,siginfo_t*si,void*_) {
+   void*a=si->si_addr,*ab=(void*)((u64)a&~(pgsiz-1));mpstb(ab, pgsiz);  
+@@ -58,10 +81,10 @@
+   M(4)M(5)M(23)M(39)M(40)M(62)M(68)M(81)
+   #define BRA {goto*j[(c+mem[c]+offs[c/(END/3)])%94];}
+   BRA;
+-  #define NXT mem[c] = \
+-    "SOMEBODY MAKE ME FEEL ALIVE" \
+-    "[hj9>,5z]&gqtyfr$(we4{WP)H-Zn,[%\\3dL+Q;>U!pJS72FhOA1CB6v^=I_0/8|jsb9m<.TVac`uY*MK'X~xDl}REokN:#?G\"i@" \
+-    "AND SHATTER ME"[mem[c]];c++;d++;BRA
++  static const char *xlat = "SOMEBODY MAKE ME FEEL ALIVE"
++    "[hj9>,5z]&gqtyfr$(we4{WP)H-Zn,[%\\3dL+Q;>U!pJS72FhOA1CB6v^=I_0/8|jsb9m<.TVac`uY*MK'X~xDl}REokN:#?G\"i@"
++    "AND SHATTER ME";
++  #define NXT do{if(mem[c]<135)mem[c]=xlat[mem[c]];c++;d++;BRA;}while(0)
+   INS_4:c=*d;NXT;INS_5:putchar(a);fflush(stdout);NXT;
+   INS_23:;int CR=getchar();a=CR==EOF?END-1:CR;NXT;INS_39:a=*d=mrot(*d);NXT;INS_40:d=mem+*d;NXT;
+   INS_62:a=*d=mcrz(a, *d);INS_68:NXT;INS_81:return 0;INS_DEF:NXT;
