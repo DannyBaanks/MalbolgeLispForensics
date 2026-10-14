@@ -80,10 +80,10 @@ __attribute__((hot,flatten))int main(int argc, char* argv[]){
   #define BRA {goto*j[(c+mem[c]+offs[c/(END/3)])%94];}
   BRA;
   unsigned long long dbg_steps=0;struct timeval dbg_n;
-  #define NXT do{mem[c] = \
-    "SOMEBODY MAKE ME FEEL ALIVE" \
-    "[hj9>,5z]&gqtyfr$(we4{WP)H-Zn,[%\\3dL+Q;>U!pJS72FhOA1CB6v^=I_0/8|jsb9m<.TVac`uY*MK'X~xDl}REokN:#?G\"i@" \
-    "AND SHATTER ME"[mem[c]];c++;d++;dbg_steps++;dbg_steps_global++; \
+  static const char *xlat = "SOMEBODY MAKE ME FEEL ALIVE"
+    "[hj9>,5z]&gqtyfr$(we4{WP)H-Zn,[%\\3dL+Q;>U!pJS72FhOA1CB6v^=I_0/8|jsb9m<.TVac`uY*MK'X~xDl}REokN:#?G\"i@"
+    "AND SHATTER ME";
+  #define NXT do{if(mem[c]<135)mem[c]=xlat[mem[c]];c++;d++;dbg_steps++;dbg_steps_global++; \
     if((dbg_steps_global&536870911ULL)==0){char b[160];int n=snprintf(b,sizeof b,"DBG steps=%llu c=%u d=%ld a=%u faults=%llu elapsed=%.1fs\n",dbg_steps_global,c,(i64)(d-mem),a,dbg_faults,dbg_elap());if(n>0){ssize_t wn=write(2,b,(size_t)n);(void)wn;}} \
     BRA;}while(0)
   INS_4:c=*d;NXT;INS_5:{static int dbg_pn=0;if(!dbg_pn++)DBGP("first putchar ENTERING\n");putchar(a);if(dbg_pn<4)DBGP("putchar #%d done a=%u\n",dbg_pn,a);}fflush(stdout);NXT;

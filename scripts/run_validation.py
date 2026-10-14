@@ -33,6 +33,28 @@ def run(cmd, cwd=None, timeout=120, stdin_text=""):
     p = subprocess.run(cmd, input=stdin_text.encode(), capture_output=True, timeout=timeout, cwd=cwd)
     return p.returncode, p.stdout, p.stderr
 
+ROOT_PARENT = os.path.dirname(ROOT)
+
+# Auto-discover backends from neighboring workspace repos if not explicitly set
+if not os.environ.get("MALBOLGE_ENGINE_EXE"):
+    for cand in (
+        os.path.join(ROOT_PARENT, "Malbolge-Engine", "malbolge"),
+        os.path.join(ROOT_PARENT, "MALBOLGE-MB-DATABASE", "runners", "malbolge-original", "malbolge"),
+    ):
+        if os.path.exists(cand):
+            os.environ["MALBOLGE_ENGINE_EXE"] = cand
+            break
+
+if not os.environ.get("ORACLE_DIR"):
+    cand = os.path.join(ROOT_PARENT, "malbolge-oracle")
+    if os.path.isdir(cand) and os.path.exists(os.path.join(cand, "oracle.py")):
+        os.environ["ORACLE_DIR"] = cand
+
+if not os.environ.get("WALBOLGE_CWD"):
+    cand = os.path.join(ROOT_PARENT, "Walbolge")
+    if os.path.isdir(cand) and os.path.isdir(os.path.join(cand, "walbolge")):
+        os.environ["WALBOLGE_CWD"] = cand
+
 results = []
 
 # --- C engine -------------------------------------------------------------
@@ -55,7 +77,7 @@ if odir and os.path.isdir(odir):
         "print('OUT:',repr(r.output));print('STEPS:',r.steps,'HALTED:',r.halted,r.halt_reason)\n"
     ) % odir
     for tag, spec in (("oracle_hello", HELLO), ("oracle_quijote", QUIJOTE)):
-        rc, out, err = run(["py", "-c", driver, spec])
+        rc, out, err = run([sys.executable, "-c", driver, spec])
         results.append(record(tag, rc, out, err))
 else:
     results.append({"name": "oracle", "skipped": "ORACLE_DIR not set"})
@@ -64,7 +86,7 @@ else:
 tkcwd = os.environ.get("TOOLKIT_CWD")
 if tkcwd and os.path.isdir(tkcwd):
     for tag, spec in (("toolkit_hello", HELLO), ("toolkit_quijote", QUIJOTE)):
-        rc, out, err = run(["py", "-m", "malbolge.cli", "run", "--ascii-file", spec, "--cycle-limit", "500000"], cwd=tkcwd)
+        rc, out, err = run([sys.executable, "-m", "malbolge.cli", "run", "--ascii-file", spec, "--cycle-limit", "500000"], cwd=tkcwd)
         results.append(record(tag, rc, out, err))
 else:
     results.append({"name": "toolkit", "skipped": "TOOLKIT_CWD not set"})
@@ -104,7 +126,7 @@ else:
 wcwd = os.environ.get("WALBOLGE_CWD")
 qdir = os.path.dirname(QUIJOTE)
 if wcwd and os.path.isdir(wcwd):
-    rc, out, err = run(["py", "-m", "walbolge.cli",
+    rc, out, err = run([sys.executable, "-m", "walbolge.cli",
                         os.path.join(qdir, "quijote_ch001_full.mal"),
                         "--manifest", os.path.join(qdir, "quijote_ch001_manifest.json"),
                         "--words-dir", qdir, "--max-steps", "500000"], cwd=wcwd, timeout=300)

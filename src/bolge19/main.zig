@@ -1,18 +1,36 @@
-﻿// bolge19 - VM Malbolge Unshackled ancho FIJO 19 trits (END=3^19).
+// bolge19 - VM Malbolge Unshackled ancho FIJO 19 trits (END=3^19).
 // Composicion: arquitectura estilo Autobolge (overlay + cadena perezosa por
-// bloques, cf. the Autobolge repo's zig/vm.zig) + semantica EXACTA fast20.c
-// (iczelia/malbolge-lisp): decode por-regiones offs[], encrypt sobre tabla
-// concatenada de 135 chars, c++ y d++ por ciclo.
-// I/O via Win32 directo (estable frente al churn de std.Io en zig 0.16).
+// bloques) + semantica EXACTA fast20.c (iczelia/malbolge-lisp): decode por-regiones
+// offs[], encrypt sobre tabla concatenada de 135 chars, c++ y d++ por ciclo.
+// I/O portable via C ABI (estable frente al churn de std.Io en zig 0.16).
 const std = @import("std");
+
+extern "c" fn fopen(filename: [*:0]const u8, modes: [*:0]const u8) ?*anyopaque;
+extern "c" fn fclose(stream: ?*anyopaque) c_int;
+extern "c" fn fseek(stream: ?*anyopaque, offset: c_long, whence: c_int) c_int;
+extern "c" fn ftell(stream: ?*anyopaque) c_long;
+extern "c" fn rewind(stream: ?*anyopaque) void;
+extern "c" fn fread(ptr: [*]u8, size: usize, n: usize, stream: ?*anyopaque) usize;
+extern "c" fn fwrite(ptr: [*]const u8, size: usize, n: usize, stream: ?*anyopaque) usize;
+extern "c" fn read(fd: c_int, buf: [*]u8, count: usize) isize;
+extern "c" fn write(fd: c_int, buf: [*]const u8, count: usize) isize;
+
+const timeval = extern struct {
+    sec: isize,
+    usec: i64,
+};
+extern "c" fn gettimeofday(tv: ?*timeval, tz: ?*anyopaque) c_int;
+
+const SEEK_SET: c_int = 0;
+const SEEK_END: c_int = 2;
 
 const END: u64 = 1162261467; // 3^19
 const THIRD: u64 = END / 3;
 
-// Prefijo 27 + tabla 94 + sufijo 14; el encrypt indexa con mem[c] directo.
+// Prefijo 27 + tabla 94 + sufijo 14; el encrypt indexa con mem[c] directo si < 135.
 const XLAT_CONCAT =
     "SOMEBODY MAKE ME FEEL ALIVE" ++
-    "[hj9>,5z]&gqtyfr$(we4{WP)H-Zn,[%\x5c3dL+Q;>U!pJS72FhOA1CB6v^=I_0/8|jsb9m<.TVac`uY*MK'X~xDl}REokN:#?G\x22i@" ++
+    "[hj9>,5z]&gqtyfr$(we4{WP)H-Zn,[%\\3dL+Q;>U!pJS72FhOA1CB6v^=I_0/8|jsb9m<.TVac`uY*MK'X~xDl}REokN:#?G\"i@" ++
     "AND SHATTER ME";
 
 const CRAZY_TBL = [3][3]u8{ .{ 1, 0, 0 }, .{ 1, 0, 2 }, .{ 2, 2, 1 } };
@@ -52,8 +70,7 @@ inline fn mrot(x: u32) u32 {
     return q +% m *% (t / 3) +% (x -% b);
 }
 
-const BLOCK: usize = 4096;
-const PAGE: usize = 65536; // granularidad de fast20 bajo Cygwin (sysconf)
+const PAGE: usize = 65536; // granularidad de fast20 bajo sysconf
 
 var image: []u32 = &[_]u32{};
 var img_len: usize = 0;
@@ -62,7 +79,7 @@ var zone_start: usize = 0;
 var pat: [6]u32 = .{0} ** 6; // patron periodo-6 mas alla de szR
 var overlay: std.AutoHashMapUnmanaged(u32, u32) = .{};
 var alloc: std.mem.Allocator = undefined;
-var norm_out_path: ?[]u8 = null;
+var norm_out_path: ?[]const u8 = null;
 
 fn initAfterLoad() void {
     zone_start = ((img_len + PAGE - 1) / PAGE) * PAGE;
@@ -107,39 +124,15 @@ fn memSet(i: usize, v: u32) void {
     }
 }
 
-const win = struct {
-    pub const INVALID_HANDLE: ?*anyopaque = @ptrFromInt(@as(usize, @bitCast(@as(isize, -1))));
-    pub const STD_IN: u32 = 0xFFFF_FFF6;
-    pub const STD_OUT: u32 = 0xFFFF_FFF5;
-    pub const GENERIC_READ: u32 = 0x8000_0000;
-    pub const FILE_SHARE_READ: u32 = 1;
-    pub const OPEN_EXISTING: u32 = 3;
-    pub const FILE_END: u32 = 2;
-
-    pub extern "kernel32" fn GetCommandLineW() callconv(.c) [*:0]u16;
-    pub extern "shell32" fn CommandLineToArgvW(cmd: [*:0]const u16, n: ?*i32) callconv(.c) ?[*][*:0]u16;
-    pub extern "kernel32" fn GetStdHandle(which: u32) callconv(.c) ?*anyopaque;
-    pub extern "kernel32" fn ReadFile(h: ?*anyopaque, buf: [*]u8, n: u32, got: ?*u32, ov: ?*anyopaque) callconv(.c) i32;
-    pub extern "kernel32" fn WriteFile(h: ?*anyopaque, buf: [*]const u8, n: u32, put: ?*u32, ov: ?*anyopaque) callconv(.c) i32;
-    pub extern "kernel32" fn CreateFileW(name: [*:0]const u16, access: u32, share: u32, sec: ?*anyopaque, disp: u32, flags: u32, tmpl: ?*anyopaque) callconv(.c) ?*anyopaque;
-    pub extern "kernel32" fn CloseHandle(h: ?*anyopaque) callconv(.c) i32;
-    pub extern "kernel32" fn SetFilePointerEx(h: ?*anyopaque, dist: i64, newpos: ?*i64, whence: u32) callconv(.c) i32;
-    pub extern "kernel32" fn GetTickCount64() callconv(.c) u64;
-};
+fn getTickCountMs() u64 {
+    var tv: timeval = undefined;
+    _ = gettimeofday(&tv, null);
+    return @as(u64, @intCast(tv.sec)) * 1000 + @as(u64, @intCast(tv.usec)) / 1000;
+}
 
 fn wout(s: []const u8) void {
-    const h = win.GetStdHandle(win.STD_OUT);
-    var put: u32 = 0;
-    _ = win.WriteFile(h, s.ptr, @intCast(s.len), &put, null);
+    _ = write(1, s.ptr, s.len);
 }
-
-fn whandle(h: ?*anyopaque, s: []const u8) void {
-    var put: u32 = 0;
-    _ = win.WriteFile(h, s.ptr, @intCast(s.len), &put, null);
-}
-
-const MNEMONICS = "....J.................i.....*..<..............p../.....v";
-// idx:4->'D'? no: usamos tabla directa abajo.
 
 fn mnemonic(op: usize) u8 {
     return switch (op) {
@@ -155,35 +148,29 @@ fn mnemonic(op: usize) u8 {
     };
 }
 
-fn runNormalize(path_u8: []u8) void {
-    const t0 = win.GetTickCount64();
-    var fsize: i64 = 0;
-    const path_w = std.unicode.utf8ToUtf16LeAllocZ(alloc, path_u8) catch return;
-    const hf = win.CreateFileW(path_w.ptr, win.GENERIC_READ, win.FILE_SHARE_READ, null, win.OPEN_EXISTING, 0, null);
-    if (hf == null or hf == win.INVALID_HANDLE) {
+fn runNormalize(path_u8: []const u8) void {
+    const t0 = getTickCountMs();
+    const c_path = alloc.dupeZ(u8, path_u8) catch return;
+    defer alloc.free(c_path);
+    const f = fopen(c_path.ptr, "rb");
+    if (f == null) {
         std.debug.print("bolge19-normalize: no pude abrir {s}\n", .{path_u8});
         return;
     }
-    defer _ = win.CloseHandle(hf);
-    _ = win.SetFilePointerEx(hf, 0, &fsize, win.FILE_END);
-    _ = win.SetFilePointerEx(hf, 0, null, 0);
+    defer _ = fclose(f);
+    _ = fseek(f, 0, SEEK_END);
+    const fsize = ftell(f);
+    rewind(f);
     if (fsize <= 0) return;
     img_len = @intCast(fsize);
     const raw = alloc.alloc(u8, img_len) catch @panic("oom");
     defer alloc.free(raw);
-    {
-        var done: usize = 0;
-        while (done < img_len) {
-            var got: u32 = 0;
-            const chunk: u32 = @intCast(@min(img_len - done, 1 << 30));
-            if (win.ReadFile(hf, raw.ptr + done, chunk, &got, null) == 0 or got == 0) break;
-            done += got;
-        }
-        if (done != img_len) {
-            std.debug.print("bolge19-normalize: lectura corta {d}/{d}\n", .{ done, img_len });
-            return;
-        }
+    const nread = fread(raw.ptr, 1, img_len, f);
+    if (nread != img_len) {
+        std.debug.print("bolge19-normalize: lectura corta {d}/{d}\n", .{ nread, img_len });
+        return;
     }
+
     image = alloc.alloc(u32, img_len) catch @panic("oom");
     for (raw, 0..) |byte, i| image[i] = byte;
 
@@ -195,12 +182,14 @@ fn runNormalize(path_u8: []u8) void {
     offs[1] = @mod(a1_off - @as(i64, @intCast(THIRD)), 94) + 94;
     offs[2] = a2_off - @as(i64, @intCast(@mod(2 * THIRD, 94))) + 94;
 
-    const outf = win.CreateFileW(std.unicode.utf8ToUtf16LeAllocZ(alloc, norm_out_path orelse "normalized.txt") catch return, 0x40000000, 0, null, 2, 0, null); // GENERIC_WRITE, CREATE_ALWAYS
-    if (outf == null or outf == win.INVALID_HANDLE) {
+    const out_path_z = alloc.dupeZ(u8, norm_out_path orelse "normalized.txt") catch return;
+    defer alloc.free(out_path_z);
+    const outf = fopen(out_path_z.ptr, "wb");
+    if (outf == null) {
         std.debug.print("bolge19-normalize: no pude crear salida\n", .{});
         return;
     }
-    defer _ = win.CloseHandle(outf);
+    defer _ = fclose(outf);
 
     var hist: [94]u64 = .{0} ** 94;
     var hasher = std.crypto.hash.sha2.Sha256.init(.{});
@@ -221,7 +210,7 @@ fn runNormalize(path_u8: []u8) void {
         hist[op] += 1;
         if (blen == buf.len) {
             hasher.update(buf[0..blen]);
-            whandle(outf, buf[0..blen]);
+            _ = fwrite(buf[0..blen].ptr, 1, blen, outf);
             blen = 0;
         }
         buf[blen] = mnemonic(op);
@@ -232,7 +221,7 @@ fn runNormalize(path_u8: []u8) void {
             dual_checks += 1;
             if ((@as(u64, mc) +% i) % 94 != op) dual_fails += 1;
         }
-        const now = win.GetTickCount64();
+        const now = getTickCountMs();
         if ((i % 20_000_000) == 19_999_999) {
             std.debug.print("norm-progress cell={d}\n", .{i + 1});
         }
@@ -240,7 +229,7 @@ fn runNormalize(path_u8: []u8) void {
             last_anchor_ms = now;
             anchors += 1;
             hasher.update(buf[0..blen]);
-            whandle(outf, buf[0..blen]);
+            _ = fwrite(buf[0..blen].ptr, 1, blen, outf);
             blen = 0;
             var snap = hasher;
             var dig: [32]u8 = undefined;
@@ -250,65 +239,65 @@ fn runNormalize(path_u8: []u8) void {
     }
     if (blen > 0) {
         hasher.update(buf[0..blen]);
-        whandle(outf, buf[0..blen]);
+        _ = fwrite(buf[0..blen].ptr, 1, blen, outf);
     }
     var dig: [32]u8 = undefined;
     var snapf = hasher;
     snapf.final(&dig);
-    std.debug.print("ANCHOR;status={s};mode=FINAL;cells={d};sha256_full={s};dual_checks={d};dual_fails={d};t_ms={d}\n", .{ if (dual_fails == 0) "PASS" else "FAIL", img_len, &std.fmt.bytesToHex(dig, .lower), dual_checks, dual_fails, win.GetTickCount64() - t0 });
+    std.debug.print("ANCHOR;status={s};mode=FINAL;cells={d};sha256_full={s};dual_checks={d};dual_fails={d};t_ms={d}\n", .{ if (dual_fails == 0) "PASS" else "FAIL", img_len, &std.fmt.bytesToHex(dig, .lower), dual_checks, dual_fails, getTickCountMs() - t0 });
     var op: usize = 0;
     while (op < 94) : (op += 1) {
         if (hist[op] > 0) std.debug.print("HIST op={d} '{c}' count={d}\n", .{ op, mnemonic(op), hist[op] });
     }
 }
 
-pub fn main() !void {
+pub fn main(init: std.process.Init.Minimal) !void {
     alloc = std.heap.page_allocator;
 
-    const cmd = win.GetCommandLineW();
-    var nargs: i32 = 0;
-    const wargv = win.CommandLineToArgvW(cmd, &nargs) orelse return error.NoArgs;
-    var path_u8: []u8 = &[_]u8{};
+    var it = init.args.iterate();
+    _ = it.next(); // argv[0]
+
+    var path_u8: ?[]const u8 = null;
     var max_steps: u64 = 0;
-    var normalize_out: []u8 = &[_]u8{};
-    var ai: i32 = 1;
-    while (ai < nargs) : (ai += 1) {
-        const wa = std.mem.span(wargv[@intCast(ai)]);
-        const u8s = std.unicode.utf16LeToUtf8Alloc(alloc, wa) catch continue;
-        if (ai == 1) {
-            path_u8 = u8s;
-        } else if (std.mem.eql(u8, u8s, "--max-steps")) {
-            ai += 1;
-            if (ai < nargs) {
-                const vs = std.unicode.utf16LeToUtf8Alloc(alloc, std.mem.span(wargv[@intCast(ai)])) catch continue;
-                max_steps = std.fmt.parseInt(u64, vs, 10) catch 0;
+    var normalize_out: ?[]const u8 = null;
+
+    while (it.next()) |arg| {
+        if (path_u8 == null and !std.mem.startsWith(u8, arg, "--")) {
+            path_u8 = arg;
+        } else if (std.mem.eql(u8, arg, "--max-steps")) {
+            if (it.next()) |val| {
+                max_steps = std.fmt.parseInt(u64, val, 10) catch 0;
             }
-        } else if (std.mem.eql(u8, u8s, "--normalize")) {
-            ai += 1;
-            if (ai < nargs) normalize_out = std.unicode.utf16LeToUtf8Alloc(alloc, std.mem.span(wargv[@intCast(ai)])) catch continue;
+        } else if (std.mem.eql(u8, arg, "--normalize")) {
+            if (it.next()) |val| {
+                normalize_out = val;
+            }
         }
     }
-    if (path_u8.len == 0) {
+
+    if (path_u8 == null) {
         std.debug.print("uso: bolge19 <imagen.mb> [--max-steps N] [--normalize salida.txt]\n", .{});
         return;
     }
-    if (normalize_out.len > 0) {
-        norm_out_path = normalize_out;
-        runNormalize(path_u8);
+
+    if (normalize_out) |nout| {
+        norm_out_path = nout;
+        runNormalize(path_u8.?);
         return;
     }
 
-    const path_w = try std.unicode.utf8ToUtf16LeAllocZ(alloc, path_u8);
-    const hf = win.CreateFileW(path_w.ptr, win.GENERIC_READ, win.FILE_SHARE_READ, null, win.OPEN_EXISTING, 0, null);
-    if (hf == null or hf == win.INVALID_HANDLE) {
-        std.debug.print("bolge19: no pude abrir {s}\n", .{path_u8});
+    const c_path = try alloc.dupeZ(u8, path_u8.?);
+    defer alloc.free(c_path);
+    const f = fopen(c_path.ptr, "rb");
+    if (f == null) {
+        std.debug.print("bolge19: no pude abrir {s}\n", .{path_u8.?});
         return;
     }
-    defer _ = win.CloseHandle(hf);
+    defer _ = fclose(f);
 
-    var fsize: i64 = 0;
-    _ = win.SetFilePointerEx(hf, 0, &fsize, win.FILE_END);
-    _ = win.SetFilePointerEx(hf, 0, null, 0);
+    _ = fseek(f, 0, SEEK_END);
+    const fsize = ftell(f);
+    rewind(f);
     if (fsize <= 0 or fsize > 4 * 1024 * 1024 * 1024) {
         std.debug.print("bolge19: tamano invalido {d}\n", .{fsize});
         return;
@@ -317,18 +306,10 @@ pub fn main() !void {
     img_len = @intCast(fsize);
     const raw = alloc.alloc(u8, img_len) catch @panic("oom");
     defer alloc.free(raw);
-    {
-        var done: usize = 0;
-        while (done < img_len) {
-            var got: u32 = 0;
-            const chunk: u32 = @intCast(@min(img_len - done, 1 << 30));
-            if (win.ReadFile(hf, raw.ptr + done, chunk, &got, null) == 0 or got == 0) break;
-            done += got;
-        }
-        if (done != img_len) {
-            std.debug.print("bolge19: lectura corta {d}/{d}\n", .{ done, img_len });
-            return;
-        }
+    const nread = fread(raw.ptr, 1, img_len, f);
+    if (nread != img_len) {
+        std.debug.print("bolge19: lectura corta {d}/{d}\n", .{ nread, img_len });
+        return;
     }
 
     image = alloc.alloc(u32, img_len) catch @panic("oom");
@@ -341,7 +322,6 @@ pub fn main() !void {
     var d: u64 = 0;
     var steps: u64 = 0;
 
-    const stdin_h = win.GetStdHandle(win.STD_IN);
     var in_buf: [1]u8 = undefined;
 
     // offs[] replica EXACTA de fast20 (incluido su quirk de parentesis)
@@ -352,7 +332,7 @@ pub fn main() !void {
     offs[1] = @mod(a1_off - @as(i64, @intCast(THIRD)), 94) + 94;
     offs[2] = a2_off - @as(i64, @intCast(@mod(2 * THIRD, 94))) + 94;
 
-    const t0 = win.GetTickCount64();
+    const t0 = getTickCountMs();
     var next_report: u64 = 200_000_000;
 
     while (true) {
@@ -371,9 +351,8 @@ pub fn main() !void {
                 wout(&ob);
             },
             23 => {
-                var got: u32 = 0;
-                const ok = win.ReadFile(stdin_h, &in_buf, 1, &got, null);
-                a = if (ok == 0 or got == 0) @truncate(END - 1) else in_buf[0];
+                const n = read(0, &in_buf, 1);
+                a = if (n <= 0) @truncate(END - 1) else in_buf[0];
             },
             39 => {
                 const r = mrot(memGet(@truncate(d)));
@@ -387,7 +366,7 @@ pub fn main() !void {
                 a = r;
             },
             81 => {
-                std.debug.print("bolge19: HALT steps={d} c={d} d={d} a={d} elapsed={d}s\n", .{ steps, c, d, a, (win.GetTickCount64() - t0) / 1000 });
+                std.debug.print("bolge19: HALT steps={d} c={d} d={d} a={d} elapsed={d}s\n", .{ steps, c, d, a, (getTickCountMs() - t0) / 1000 });
                 break;
             },
             else => {},
@@ -399,10 +378,8 @@ pub fn main() !void {
         d = (d + 1) % END;
         steps += 1;
         if (steps >= next_report) {
-            std.debug.print("bolge19: steps={d} c={d} d={d} a={d} overlay={d} elapsed={d}s\n", .{ steps, c, d, a, overlay.count(), (win.GetTickCount64() - t0) / 1000 });
+            std.debug.print("bolge19: steps={d} c={d} d={d} a={d} overlay={d} elapsed={d}s\n", .{ steps, c, d, a, overlay.count(), (getTickCountMs() - t0) / 1000 });
             next_report += 200_000_000;
         }
     }
 }
-
-
