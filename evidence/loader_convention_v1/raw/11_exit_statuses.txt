@@ -1,0 +1,6 @@
+bolge19: cargador desconocido bogus (valores: raw canonical)
+exit_unknown_flag=2
+bolge19: caracter invalido byte=7 v=99 instr=12
+exit_canonical_reject=2
+HALT steps=19301 c=19399 d=387450038 a=182815712 elapsed=0s
+exit_good_load=0

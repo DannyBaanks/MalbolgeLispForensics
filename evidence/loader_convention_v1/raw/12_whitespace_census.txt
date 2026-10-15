@@ -1,0 +1,4 @@
+init_module.mb	bytes=19392	sha256=4b3080fd250a4193030ec647e6c496f90540c1546f717b923284ea31b411e812	pinned-ok	ws_count=1	ws_offsets=[19391]
+core.mb	bytes=371312023	sha256=70e9155bbe44b58a0a44795cf0c614b214c8f31f82270f4913394e07f1f3e53a	pinned-ok	ws_count=0	ws_offsets=[]
+lisp.mb	bytes=371331415	sha256=092df5cdc240de33a355d3cf82bdf09e0859c5827ee57a65bf93dfc37e8f3256	pinned-ok	ws_count=1	ws_offsets=[19391]
+artifact.mu	bytes=2888171	sha256=3b9bdf37eb708ec751d10f0dea32edde4375e526ce56fd2dd440f5a22819ba10	unpinned	ws_count=2	ws_offsets=[2888169, 2888170]

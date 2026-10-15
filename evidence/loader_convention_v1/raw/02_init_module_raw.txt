@@ -1,0 +1,3 @@
+bolge19: AVISO init_module.mb: 1 celdas de espaciado contadas como celdas por el cargador crudo; use --loader canonical para imagenes de texto alineado a opcode
+bolge19: imagen=19392 celdas zona=[46144,92288) pat=[581130726,10,581130726...]
+bolge19: HALT steps=19337 c=19435 d=19 a=710270897 elapsed=0s

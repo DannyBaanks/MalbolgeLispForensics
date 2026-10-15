@@ -36,3 +36,28 @@ new probe stored under `evidence/`.
 8. **Reproduction of the 75 s run on other machines.** Memory pressure,
    storage speed and CPU differ; only the artifact hashes are portable
    promises, not the timings.
+
+9. **Reproducing `HALT steps=2408246381` (A4) from recorded inputs.** The full
+   Lisp session's stdout is byte-identical across runs and platforms, and the
+   periodic telemetry matches the published log line-for-line through
+   2,200,000,000 steps, but the final step count depends on the exact stdin
+   byte stream: piping `(+ 1 2)` plus EOF halts at 2,401,426,208, and adding one
+   `0x1A` byte halts at 2,686,077,407 — both with the same final machine state
+   `c=581143360 d=581861866 a=10`. The original interactive transcript was
+   never pinned in evidence, so A4's number cannot be re-derived, only
+   respected. No divergence of the machine is claimed either way.
+   Probe: `evidence/loader_convention_v1/raw/09_lisp_session_*`.
+
+10. **Whether the 6 content-changed manifest entries are deliberate edits.**
+    `evidence/hashes/evidence.sha256` does not describe HEAD for 63 of its 150
+    entries; 57 of those are line-ending-only and 6 (`README.md`, `.gitignore`,
+    `docs/REPRODUCTION.md`, `scripts/run_validation.py`,
+    `src/bolge19/main.zig`, `src/patches/fast20_fixed.c`) differ in content.
+    Their hashes were recorded before a Windows-to-Linux transition, and this
+    repository's history was published in two initial commits, so intent cannot
+    be recovered from it. Nothing was rewritten to make the numbers look right.
+    Probe: `evidence/loader_convention_v1/raw/10_manifest_cause.txt`.
+
+Item 7 above (POSIX portability "unplanned") is now partially superseded by
+claim G6: the committed source has no Win32 calls and runs on Linux. The
+Win32-era rationale in `docs/ARCHITECTURE.md` stays as written history.

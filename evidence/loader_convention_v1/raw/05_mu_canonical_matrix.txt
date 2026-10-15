@@ -1,0 +1,5 @@
+canonical  in=0  stdout=310a  steps=8623625
+canonical  in=1  stdout=330a  steps=9171949
+canonical  in=2  stdout=350a  steps=9725624
+canonical  in=3  stdout=370a  steps=10254258
+canonical  in=4  stdout=390a  steps=10820576

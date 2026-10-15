@@ -260,6 +260,8 @@ pub fn main(init: std.process.Init.Minimal) !void {
     var path_u8: ?[]const u8 = null;
     var max_steps: u64 = 0;
     var normalize_out: ?[]const u8 = null;
+    var loader_canonical: bool = false;
+    var loader_bad: bool = false;
 
     while (it.next()) |arg| {
         if (path_u8 == null and !std.mem.startsWith(u8, arg, "--")) {
@@ -267,6 +269,15 @@ pub fn main(init: std.process.Init.Minimal) !void {
         } else if (std.mem.eql(u8, arg, "--max-steps")) {
             if (it.next()) |val| {
                 max_steps = std.fmt.parseInt(u64, val, 10) catch 0;
+            }
+        } else if (std.mem.eql(u8, arg, "--loader")) {
+            if (it.next()) |val| {
+                if (std.mem.eql(u8, val, "canonical")) {
+                    loader_canonical = true;
+                } else if (!std.mem.eql(u8, val, "raw")) {
+                    loader_bad = true;
+                    std.debug.print("bolge19: cargador desconocido {s} (valores: raw canonical)\n", .{val});
+                }
             }
         } else if (std.mem.eql(u8, arg, "--normalize")) {
             if (it.next()) |val| {
@@ -276,9 +287,10 @@ pub fn main(init: std.process.Init.Minimal) !void {
     }
 
     if (path_u8 == null) {
-        std.debug.print("uso: bolge19 <imagen.mb> [--max-steps N] [--normalize salida.txt]\n", .{});
+        std.debug.print("uso: bolge19 <imagen.mb> [--max-steps N] [--loader raw|canonical] [--normalize salida.txt]\n", .{});
         return;
     }
+    if (loader_bad) std.process.exit(2);
 
     if (normalize_out) |nout| {
         norm_out_path = nout;
@@ -313,7 +325,38 @@ pub fn main(init: std.process.Init.Minimal) !void {
     }
 
     image = alloc.alloc(u32, img_len) catch @panic("oom");
-    for (raw, 0..) |byte, i| image[i] = byte;
+    if (loader_canonical) {
+        // Cargador estricto al estilo del Unshackled original: el espaciado NO es
+        // una celda y cada instruccion se acepta solo si cae en un opcode valido.
+        // Produce exactamente la misma imagen que recortar el espaciado del fichero.
+        var kept: usize = 0;
+        var pos: usize = 0;
+        for (raw, 0..) |byte, i| {
+            if (byte == ' ' or byte == '\t' or byte == '\r' or byte == '\n') continue;
+            const instr: usize = @mod(@as(usize, byte) + pos, 94);
+            const aceptable = byte >= 33 and byte < 127 and switch (instr) {
+                4, 5, 23, 39, 40, 62, 68, 81 => true,
+                else => false,
+            };
+            if (!aceptable) {
+                std.debug.print("bolge19: caracter invalido byte={d} v={d} instr={d}\n", .{ i, byte, instr });
+                std.process.exit(2);
+            }
+            image[kept] = byte;
+            kept += 1;
+            pos = @mod(pos + 1, 564);
+        }
+        img_len = kept;
+    } else {
+        var ws: usize = 0;
+        for (raw) |byte| {
+            if (byte == ' ' or byte == '\t' or byte == '\r' or byte == '\n') ws += 1;
+        }
+        if (ws != 0) {
+            std.debug.print("bolge19: AVISO {s}: {d} celdas de espaciado contadas como celdas por el cargador crudo; use --loader canonical para imagenes de texto alineado a opcode\n", .{ path_u8.?, ws });
+        }
+        for (raw, 0..) |byte, i| image[i] = byte;
+    }
     initAfterLoad();
     std.debug.print("bolge19: imagen={d} celdas zona=[{d},{d}) pat=[{d},{d},{d}...]\n", .{ img_len, zone_start - img_len, zone_start - img_len + chain_zone.len, pat[0], pat[1], pat[2] });
 

@@ -1,0 +1,18 @@
+hashed_entries=150
+  recorded_hash_matches_head=87
+  line_ending_only=57
+  content_change=6
+  missing_in_head=0
+content_change_paths:
+  .gitignore
+  README.md
+  docs/REPRODUCTION.md
+  scripts/run_validation.py
+  src/bolge19/main.zig
+  src/patches/fast20_fixed.c
+worktree_vs_head:
+  WORKTREE_DIFFERS_FROM_HEAD docs/ARCHITECTURE.md
+  WORKTREE_DIFFERS_FROM_HEAD docs/CLAIMS.md
+  WORKTREE_DIFFERS_FROM_HEAD docs/NOT_DEMONSTRATED.md
+  WORKTREE_DIFFERS_FROM_HEAD docs/REPRODUCTION.md
+  WORKTREE_DIFFERS_FROM_HEAD src/bolge19/main.zig

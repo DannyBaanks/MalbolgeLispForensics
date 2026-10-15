@@ -1,0 +1,9 @@
+published_stdout_sha256=b3214e2914a175fdac1c3898e7ec8d3b4eef88bcde6da152a551b57d058d02ea
+published_halt=HALT steps=2408246381 c=581143360 d=581861866 a=10 elapsed=75s
+published_image_line=imagen=371331415 celdas zona=[61097,122194) pat=[81,581130652,81...]
+run1_status=0
+run1_stdout_sha256=b3214e2914a175fdac1c3898e7ec8d3b4eef88bcde6da152a551b57d058d02ea
+run1_stdout_vs_published=IDENTICAL
+run1_image_line=imagen=371331415 celdas zona=[61097,122194) pat=[81,581130652,81...]
+run1_halt=HALT steps=2401426208 c=581143360 d=581861866 a=10 elapsed=34s
+one_extra_stdin_byte_0x1A_halt=HALT steps=2686077407 c=581143360 d=581861866 a=10 elapsed=39s

@@ -94,3 +94,47 @@ Use the Translator to compile any text into `.mal` + manifest + word files,
 execute the `.mal` with any 3^10 backend, then run Walbolge with
 `--manifest/--words-dir` and require all four roundtrip flags True. The
 committed Quijote specimen already satisfies this end-to-end.
+
+## 7. Loader convention probe
+
+Two image conventions exist for 3^19 tapes and `bolge19` can read either. The
+default (`raw`) is what every claim in `docs/CLAIMS.md` A1–A5 was measured
+under; `--loader canonical` implements the strict Unshackled reader for
+opcode-aligned text images.
+
+```
+bolge19.exe <image>                              # raw cell dump (default)
+bolge19.exe <image> --loader canonical           # opcode-aligned text
+```
+
+On Linux the build needs `-lc`, which the Windows command in section 1 does not:
+
+```
+zig build-exe -O ReleaseFast src/bolge19/main.zig -lc -femit-bin=bolge19
+```
+
+Spot checks, relative to this repository root, with the specimens in a sibling
+directory:
+
+```
+printf '0\n' | ./bolge19 <dir>/init_module.mb                        # HALT steps=19337
+printf '0\n' | ./bolge19 <dir>/init_module.mb --loader canonical     # HALT steps=19301
+./bolge19 <dir>/lisp.mb --loader canonical                           # rejects: byte=19392
+```
+
+Full probe (sanitized captures, specimens pinned by hash, each probe SKIPs on
+drift), executed here on Linux with zig 0.16.0:
+
+```
+LISP_RUNTIME_DIR=<dir with init_module.mb core.mb lisp.mb> \
+EXT_SPECIMEN_DIR=<dir with artifact.mu> \
+bash evidence/loader_convention_v1/capture.sh
+sha256sum -c evidence/hashes/loader_convention_v1.sha256
+python3 evidence/loader_convention_v1/tools/manifest_cause.py
+```
+
+`scripts/verify_evidence.py` currently reports 63 mismatches out of 150 for
+reasons that predate this probe: 57 are line-ending-only (the manifest was
+published against a CRLF checkout) and 6 are content changes. The cause
+classification is reproducible with the last command above and is recorded in
+`evidence/loader_convention_v1/raw/10_manifest_cause.txt`.

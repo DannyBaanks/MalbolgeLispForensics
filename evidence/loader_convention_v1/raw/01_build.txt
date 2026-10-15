@@ -1,0 +1,5 @@
+zig=0.16.0
+source=src/bolge19/main.zig
+source_sha256=47758a3f667f4089f6029d86130b94f14f082d4c113a212b8ff571d84113e8a3
+build_cmd=zig build-exe -O ReleaseFast main.zig -lc -femit-bin=<EVIDENCE_DIR>/lc_bolge19
+binary_sha256=2cae851dd3175ca11832f53849a8f09c54ac279f48e8805dcecdbde10aa9ff0f

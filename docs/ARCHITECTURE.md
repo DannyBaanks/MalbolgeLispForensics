@@ -33,6 +33,37 @@ I/O is raw Win32 (`CreateFileW/ReadFile/WriteFile/GetStdHandle`), chosen
 deliberately against API churn and against stdio-lock interactions with
 fault handlers.
 
+> Note (2026-10-15): the paragraph above describes the published Windows
+> build. The `src/bolge19/main.zig` now in HEAD declares `fopen/fread/fwrite`
+> and POSIX `read` and contains no Win32 calls; it builds on Linux with
+> `-lc`. The design rationale (do not `fprintf` from fault paths) still
+> applies, but the API list is historical. Recorded as `raw/01` and `raw/09`
+> in `evidence/loader_convention_v1/`.
+
+### Two image conventions, one loader switch
+
+A 3^19 tape arrives in one of two shapes and they are not interchangeable:
+
+* **Raw cell dump** — one byte per cell, everything counts, including bytes
+  `32/9/10/13`. `core.mb`, and therefore `lisp.mb`.
+* **Opcode-aligned text** — the strict Unshackled reader: `' ' \t \r \n` are
+  not cells, a byte is accepted only when `33 <= v < 127` and
+  `mod(v + pos, 94)` is in `{4,5,23,39,40,62,68,81}`, and `pos` advances only
+  on accepted cells (wrapping at 564). HeLL/LMFAO `.mu` products are written
+  for this reader.
+
+`bolge19` loads raw by default, because that is the convention every claim in
+`docs/CLAIMS.md` A1–A5 was measured under. `--loader canonical` implements the
+strict rule for text images, and the raw path prints a warning when a tape
+contains spacing bytes so that loading a text image by mistake cannot pass
+silently: it corrupts `pat[]` past the image and the machine halts with garbage
+in ~20k steps instead of failing. See `evidence/loader_convention_v1/`.
+
+Consequence for cross-engine comparison: step counts are only comparable when
+the loader convention is named. The same `init_module.mb` bytes halt at 19,337
+(raw) or 19,301 (canonical), and `lisp.mb` cannot be canonical-loaded at all
+because its one newline sits 19,391 bytes inside the tape.
+
 ## Lessons that cost us hours (do not relearn them)
 
 - Never ignore mmap return values; on Cygwin the failure mode is silent and
