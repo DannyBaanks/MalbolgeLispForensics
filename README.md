@@ -1,9 +1,15 @@
-# Forensics de MalbolgeLISP
+# Forensics de MalbolgeLISP v2.0 — Análisis Multiplataforma y Evidencia para Malbolge 3^19
 
-Forensics reproducibles para **MalbolgeLISP v1.2** — un programa inusualmente grande
-escrito en el lenguaje esoterico familia Malbolge, apuntando a un **modelo de memoria 3^19**
-(Malbolge "Unshackled", ancho de rotacion fijo 19) — mas un
-suite de validacion cross-implementation para Malbolge clasico 3^10, y el framework de busqueda y evaluacion **Danny Opera Solver**.
+[![Version](https://img.shields.io/badge/version-2.0-blue.svg)](https://github.com/DannyBaanks/MalbolgeLispForensics)
+[![Model](https://img.shields.io/badge/model-Unshackled%203%5E19-orange.svg)]()
+[![Forensics](https://img.shields.io/badge/forensics-4%2F4%20DEMONSTRATED-brightgreen.svg)]()
+
+Forensics reproducibles para **MalbolgeLISP v1.2 / v2.0** — un programa inusualmente grande
+escrito en el lenguaje esotérico familia Malbolge, apuntando a un **modelo de memoria 3^19**
+(Malbolge "Unshackled", ancho de rotación fijo 19) — más una
+suite de validación cross-implementation para Malbolge clásico 3^10, y el framework de búsqueda y evaluación **Danny Opera Solver**.
+
+Parte de la **Suite Forense y de Consenso v2.0** del ecosistema Malbolge de ISyCo.
 
 Este repositorio responde cuatro preguntas con evidencia ejecutable:
 
